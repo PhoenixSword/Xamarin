@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xamarin="clr-namespace:Xamarin;assembly=Xamarin"
+             x:Class="Xamarin.Views.NewItemPage"
+             Title="{Binding Name}">
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Save" Icon="SaveIcon.png"  Clicked="Save_Clicked" Priority="2"/>
+    </ContentPage.ToolbarItems>
+    
+    <ContentPage.Content>
+        <StackLayout Spacing="20" Padding="15">
+            <Label Text="Text" FontSize="Medium" />
+            <xamarin:CustomEntry Text="{Binding Item.Text}" FontSize="Small" />
+            <Label Text="Description" FontSize="Medium" />
+            <xamarin:CustomEntry Text="{Binding Item.Description}" FontSize="Small" Margin="0" />
+        </StackLayout>
+    </ContentPage.Content>
+    
+</ContentPage>
