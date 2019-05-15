@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQLite;
+using System;
 
 namespace Xamarin.Models
 {
@@ -7,5 +8,7 @@ namespace Xamarin.Models
         public string Id { get; set; }
         public string Text { get; set; }
         public string Description { get; set; }
+        public string Number { get; set; }
+
     }
 }

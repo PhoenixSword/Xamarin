@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:xamarin="clr-namespace:Xamarin;assembly=Xamarin"
+             xmlns:behaviors="clr-namespace:Xamarin.Behaviors;assembly=Xamarin"
              x:Class="Xamarin.Views.NewItemPage"
              Title="{Binding Name}">
     
@@ -15,7 +16,12 @@
             <xamarin:CustomEntry Text="{Binding Item.Text}" FontSize="Small" />
             <Label Text="Description" FontSize="Medium" />
             <xamarin:CustomEntry Text="{Binding Item.Description}" FontSize="Small" Margin="0" />
-        </StackLayout>
+            <xamarin:CustomEntry Text="{Binding Item.Number}" FontSize="Small" Margin="0"  >
+                <Entry.Behaviors>
+                    <behaviors:NumberValidationBehavior />
+                </Entry.Behaviors>
+            </xamarin:CustomEntry>
+</StackLayout>
     </ContentPage.Content>
     
 </ContentPage>

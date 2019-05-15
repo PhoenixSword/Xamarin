@@ -16,18 +16,21 @@ namespace Xamarin.Views
     [DesignTimeVisible(true)]
     public partial class NewItemPage : ContentPage
     {
+        string dbPath;
         public Item Item { get; set; }
         public string Name { get; set; }
 
         public NewItemPage()
         {
+            dbPath = DependencyService.Get<IPath>().GetDatabasePath(App.DBFILENAME);
             Name = "Add Item";
             InitializeComponent();
 
             Item = new Item
             {
                 Text = "Item name",
-                Description = "This is an item description."
+                Description = "This is an item description.",
+                Number = "0"
             };
 
             BindingContext = this;
@@ -36,6 +39,7 @@ namespace Xamarin.Views
         [Obsolete]
         public NewItemPage(ItemDetailViewModel itemDetail)
         {
+            dbPath = DependencyService.Get<IPath>().GetDatabasePath(App.DBFILENAME);
             var deleteButton = new ToolbarItem {Text = "Delete", Icon = "DeleteIcon.png"};
             Name = "Edit Item";
             deleteButton.Clicked += Delete_Clicked;
@@ -44,7 +48,8 @@ namespace Xamarin.Views
             {
                 Id = itemDetail.Item.Id,
                 Text = itemDetail.Item.Text,
-                Description = itemDetail.Item.Description
+                Description = itemDetail.Item.Description,
+                Number = itemDetail.Item.Number
             };
 
             BindingContext = this;
@@ -52,21 +57,50 @@ namespace Xamarin.Views
             ToolbarItems.Add(deleteButton);
         }
 
-        async void Save_Clicked(object sender, EventArgs e)
-        {
-            MessagingCenter.Send(this, string.IsNullOrEmpty(Item.Id) ? "AddItem" : "UpdateItem", Item);
-            await Navigation.PopAsync();
-        }
+        //async void Save_Clicked(object sender, EventArgs e)
+        //{
+        //    MessagingCenter.Send(this, string.IsNullOrEmpty(Item.Id) ? "AddItem" : "UpdateItem", Item);
+        //    await Navigation.PopAsync();
+        //}
 
         async void Cancel_Clicked(object sender, EventArgs e)
         {
             await Navigation.PopAsync();
         }
 
-        async void Delete_Clicked(object sender, EventArgs e)
+        //async void Delete_Clicked(object sender, EventArgs e)
+        //{
+        //    MessagingCenter.Send(this, "DeleteItem", Item);
+        //    await Navigation.PopAsync();
+        //}
+
+        private void Save_Clicked(object sender, EventArgs e)
         {
-            MessagingCenter.Send(this, "DeleteItem", Item);
-            await Navigation.PopAsync();
+            var item = Item;
+            if (!String.IsNullOrEmpty(item.Text))
+            {
+                using (ApplicationContext db = new ApplicationContext(dbPath))
+                {
+                    if (string.IsNullOrEmpty(item.Id))
+                        db.Items.Add(item);
+                    else
+                    {
+                        db.Items.Update(item);
+                    }
+                    db.SaveChanges();
+                }
+            }
+            this.Navigation.PopAsync();
+        }
+        private void Delete_Clicked(object sender, EventArgs e)
+        {
+            var item = Item;
+            using (ApplicationContext db = new ApplicationContext(dbPath))
+            {
+                db.Items.Remove(item);
+                db.SaveChanges();
+            }
+            this.Navigation.PopAsync();
         }
     }
 }

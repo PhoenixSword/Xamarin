@@ -1,29 +1,32 @@
 ﻿using System;
+using System.Linq;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using Xamarin.Services;
+using Xamarin.Models;
 using Xamarin.Views;
 
 namespace Xamarin
 {
     public partial class App : Application
     {
-        //TODO: Replace with *.azurewebsites.net url after deploying backend to Azure
-        //To debug on Android emulators run the web backend against .NET Core not IIS
-        //If using other emulators besides stock Google images you may need to adjust the IP address
-        public static string AzureBackendUrl =
-            DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:5000" : "http://localhost:5000";
-        public static bool UseMockDataStore = true;
-
+        public const string DBFILENAME = "itemsapp.db";
         public App()
         {
             InitializeComponent();
 
-            if (UseMockDataStore)
-                DependencyService.Register<MockDataStore>();
-            else
-                DependencyService.Register<AzureDataStore>();
+            string dbPath = DependencyService.Get<IPath>().GetDatabasePath(DBFILENAME);
+            using (var db = new ApplicationContext(dbPath))
+            {
+                db.Database.EnsureCreated();
+                if (!db.Items.Any())
+                {
+                    db.Items.Add(new Item { Text = "item1", Description = "descr1", Number = "1"});
+                    db.Items.Add(new Item { Text = "item2", Description = "descr2", Number = "2" });
+                    db.SaveChanges();
+                }
+            }
+
             MainPage = new MainPage();
         }
 

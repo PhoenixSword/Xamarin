@@ -20,11 +20,11 @@ namespace Xamarin.Views
     public partial class ItemsPage : ContentPage
     {
         ItemsViewModel viewModel;
-
+        string dbPath;
         public ItemsPage()
         {
             InitializeComponent();
-
+            dbPath = DependencyService.Get<IPath>().GetDatabasePath(App.DBFILENAME);
             BindingContext = viewModel = new ItemsViewModel();
         }
 
@@ -37,7 +37,7 @@ namespace Xamarin.Views
             await Navigation.PushAsync(new NewItemPage(new ItemDetailViewModel(item)));
 
             // Manually deselect item.
-            ItemsListView.SelectedItem = null;
+            ItemsList.SelectedItem = null;
         }
 
         async void AddItem_Clicked(object sender, EventArgs e)
@@ -47,9 +47,12 @@ namespace Xamarin.Views
 
         protected override void OnAppearing()
         {
+            string dbPath = DependencyService.Get<IPath>().GetDatabasePath(App.DBFILENAME);
+            using (ApplicationContext db = new ApplicationContext(dbPath))
+            {
+                ItemsList.ItemsSource = db.Items.ToList();
+            }
             base.OnAppearing();
-            if (viewModel.Items.Count == 0)
-                viewModel.LoadItemsCommand.Execute(null);
         }
     }
 }
