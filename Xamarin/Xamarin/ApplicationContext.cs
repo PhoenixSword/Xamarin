@@ -7,7 +7,8 @@ namespace Xamarin
     {
         private string _databasePath;
 
-        public DbSet<Item> Items { get; set; }
+        public DbSet<Dish> Dishes { get; set; }
+        public DbSet<Ingredient> Ingredients { get; set; }
 
         public ApplicationContext(string databasePath)
         {

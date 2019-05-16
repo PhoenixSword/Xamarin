@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-
 using Xamarin.Models;
-using Xamarin.Views;
 using Xamarin.ViewModels;
 
 namespace Xamarin.Views
@@ -17,41 +13,52 @@ namespace Xamarin.Views
     // Learn more about making custom code visible in the Xamarin.Forms previewer
     // by visiting https://aka.ms/xamarinforms-previewer
     [DesignTimeVisible(true)]
-    public partial class ItemsPage : ContentPage
+    public partial class DishesPage
     {
-        ItemsViewModel viewModel;
+        DishesViewModel viewModel;
         string dbPath;
-        public ItemsPage()
+        public DishesPage()
         {
             InitializeComponent();
             dbPath = DependencyService.Get<IPath>().GetDatabasePath(App.DBFILENAME);
-            BindingContext = viewModel = new ItemsViewModel();
+            BindingContext = viewModel = new DishesViewModel();
         }
 
-        [Obsolete]
         async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
         {
-            if (!(args.SelectedItem is Item item))
+            if (!(args.SelectedItem is Dish dish))
                 return;
-
-            await Navigation.PushAsync(new NewItemPage(new ItemDetailViewModel(item)));
+            await Navigation.PushAsync(new NewDishPage(new DishDetailViewModel(dish)));
 
             // Manually deselect item.
-            ItemsList.SelectedItem = null;
+            DishesList.SelectedItem = null;
         }
 
         async void AddItem_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new NewItemPage());
+            await Navigation.PushAsync(new NewDishPage());
         }
+
 
         protected override void OnAppearing()
         {
             string dbPath = DependencyService.Get<IPath>().GetDatabasePath(App.DBFILENAME);
+            
             using (ApplicationContext db = new ApplicationContext(dbPath))
             {
-                ItemsList.ItemsSource = db.Items.ToList();
+                var list = db.Dishes.Select(i => new Dish
+                {
+                    Id = i.Id,
+                    Name = i.Name,
+                    Description = i.Description,
+                    Image = i.Image ,
+                    ImageSource = i.Image != null ? ImageSource.FromStream(() => new MemoryStream(i.Image)) : ImageSource.FromFile("EmptyImage.jpg"),
+                    Ingredients = i.Ingredients
+                    
+                }).ToList();
+                DishesList.ItemsSource = list;
             }
+            
             base.OnAppearing();
         }
     }

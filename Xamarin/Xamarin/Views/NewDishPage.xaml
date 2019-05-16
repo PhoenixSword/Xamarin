@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xamarin="clr-namespace:Xamarin;assembly=Xamarin"
+             xmlns:behaviors="clr-namespace:Xamarin.Behaviors;assembly=Xamarin"
+             x:Class="Xamarin.Views.NewDishPage"
+             Title="{Binding Name}">
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Save" Icon="SaveIcon.png"  Clicked="Save_Clicked" Priority="2"/>
+    </ContentPage.ToolbarItems>
+    
+    <ContentPage.Content>
+        <ScrollView>
+        <StackLayout Spacing="20" Padding="15">
+                <Image x:Name="selectedImage" Source="{Binding selectedImageFile}" WidthRequest="200" HeightRequest="300">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Handle_Clicked" />
+                    </Image.GestureRecognizers>
+                </Image>
+
+                <Label Text="Name" FontSize="Medium" />
+                <xamarin:CustomEntry Text="{Binding Dish.Name}" FontSize="18" />
+                <Label Text="Count" FontSize="Medium" />
+                <xamarin:CustomEntry Text="{Binding Dish.Description}" FontSize="18" />
+                <FlexLayout AlignItems="Center" JustifyContent="SpaceAround">
+                    <Label Text="Ingredients" 
+                           HorizontalTextAlignment="Center"
+                           Style="{DynamicResource ListItemTextStyle}" 
+                           FontSize="24" 
+                           WidthRequest="150"/>
+                </FlexLayout>
+
+                <ListView x:Name="IngredientsList"
+                          ItemsSource="{Binding}"
+                          HasUnevenRows="True"
+                          SeparatorVisibility="None">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                            <FlexLayout Margin="0,4" AlignItems="Center" JustifyContent="SpaceAround">
+                                <xamarin:CustomEntry Text="{Binding Name}" 
+                                                     HorizontalTextAlignment="Center"
+                                                     FontSize="18" 
+                                                     WidthRequest="150"
+                                                     HeightRequest="50"
+                                                     Placeholder="Name"/>
+                                <xamarin:CustomEntry Text="{Binding Count}" 
+                                                     HorizontalTextAlignment="Center"
+                                                     FontSize="18" 
+                                                     WidthRequest="150"
+                                                     HeightRequest="50"
+                                                     Placeholder="Count">
+                                </xamarin:CustomEntry>
+                                <Image Source="DeleteIcon.png" WidthRequest="50" HeightRequest="50">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="Delete_Ingredient" />
+                                    </Image.GestureRecognizers>
+                                </Image>
+                                </FlexLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Button Clicked="Add" Text="Add"/>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+    
+</ContentPage>

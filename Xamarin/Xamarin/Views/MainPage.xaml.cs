@@ -27,15 +27,7 @@ namespace Xamarin.Views
         {
             if (!MenuPages.ContainsKey(id))
             {
-                switch (id)
-                {
-                    case (int)MenuItemType.Browse:
-                        MenuPages.Add(id, new NavigationPage(new ItemsPage()));
-                        break;
-                    //case (int)MenuItemType.Add:
-                    //    MenuPages.Add(id, new NavigationPage(new NewItemPage()));
-                    //    break;
-                }
+                if (id == (int) MenuItemType.Browse) MenuPages.Add(id, new NavigationPage(new DishesPage()));
             }
 
             var newPage = MenuPages[id];

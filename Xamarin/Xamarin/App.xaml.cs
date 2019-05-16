@@ -1,8 +1,6 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Xamarin.Essentials;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 using Xamarin.Models;
 using Xamarin.Views;
 
@@ -10,7 +8,7 @@ namespace Xamarin
 {
     public partial class App : Application
     {
-        public const string DBFILENAME = "itemsapp.db";
+        public const string DBFILENAME = "app.db";
         public App()
         {
             InitializeComponent();
@@ -19,10 +17,10 @@ namespace Xamarin
             using (var db = new ApplicationContext(dbPath))
             {
                 db.Database.EnsureCreated();
-                if (!db.Items.Any())
+                if (!db.Dishes.Any())
                 {
-                    db.Items.Add(new Item { Text = "item1", Description = "descr1", Number = "1"});
-                    db.Items.Add(new Item { Text = "item2", Description = "descr2", Number = "2" });
+                    db.Dishes.Add(new Dish { Name = "Dish1", Description = "Dishdescr1", Ingredients = new List<Ingredient> { new Ingredient{ Name = "name1", Count = "1"}}});
+                    db.Dishes.Add(new Dish { Name = "Dish2", Description = "Dishdescr2", Ingredients = new List<Ingredient> { new Ingredient { Name = "name2", Count = "2"}}});
                     db.SaveChanges();
                 }
             }

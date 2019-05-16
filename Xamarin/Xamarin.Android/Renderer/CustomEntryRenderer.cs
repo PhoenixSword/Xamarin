@@ -1,6 +1,7 @@
 ﻿using System;
 using Android.Content;
 using Android.Graphics.Drawables;
+using Android.Text;
 using Android.Util;
 using Xamarin;
 using Xamarin.Android;
@@ -10,7 +11,7 @@ using Xamarin.Forms.Platform.Android;
 [assembly: ExportRenderer(typeof(CustomEntry), typeof(CustomEntryRenderer))]
 namespace Xamarin.Android
 {
-    [System.Obsolete]
+    [Obsolete]
     public class CustomEntryRenderer : EntryRenderer
     {
         protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
@@ -37,6 +38,7 @@ namespace Xamarin.Android
 
             // set the background of the label
             Control.SetBackground(_gradientBackground);
+            //Control.SetRawInputType(InputTypes.ClassNumber);
 
 
         }
