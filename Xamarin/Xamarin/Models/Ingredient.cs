@@ -11,10 +11,11 @@ namespace Xamarin.Models
         public string Id { get; set; }
         public string Name { get; set; }
         public string Count { get; set; }
+        public string Price { get; set; }
 
         [ForeignKey(typeof(Dish))]
         public string DishId { get; set; }
         [ManyToOne]
-        public Dish Dishes { get; set; }
+        public Dish Dish { get; set; }
     }
 }

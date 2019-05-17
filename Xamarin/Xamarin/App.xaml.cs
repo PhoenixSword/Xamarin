@@ -19,8 +19,8 @@ namespace Xamarin
                 db.Database.EnsureCreated();
                 if (!db.Dishes.Any())
                 {
-                    db.Dishes.Add(new Dish { Name = "Dish1", Description = "Dishdescr1", Ingredients = new List<Ingredient> { new Ingredient{ Name = "name1", Count = "1"}}});
-                    db.Dishes.Add(new Dish { Name = "Dish2", Description = "Dishdescr2", Ingredients = new List<Ingredient> { new Ingredient { Name = "name2", Count = "2"}}});
+                    db.Dishes.Add(new Dish { Name = "Dish1", Description = "Dishdescr1", Ingredients = new List<Ingredient> { new Ingredient{ Name = "name1", Count = "1", Price = "0"}}});
+                    db.Dishes.Add(new Dish { Name = "Dish2", Description = "Dishdescr2", Ingredients = new List<Ingredient> { new Ingredient { Name = "name2", Count = "2", Price = "0" } }});
                     db.SaveChanges();
                 }
             }

@@ -18,7 +18,7 @@ namespace Xamarin.ViewModels
         public Command LoadDishesCommand { get; set; }
         public DishesViewModel()
         {
-            Title = "Browse";
+            Title = "My Dishes";
             Dishes = new ObservableCollection<Dish>();
             LoadDishesCommand = new Command(async () => await ExecuteLoadDishesCommand());
         }

@@ -13,7 +13,7 @@ namespace Xamarin.Views
     [DesignTimeVisible(true)]
     public partial class MenuPage : ContentPage
     {
-        MainPage RootPage { get => Application.Current.MainPage as MainPage; }
+        MainPage RootPage => Application.Current.MainPage as MainPage;
         List<HomeMenuItem> menuItems;
         public MenuPage()
         {
@@ -21,8 +21,7 @@ namespace Xamarin.Views
 
             menuItems = new List<HomeMenuItem>
             {
-                new HomeMenuItem {Id = MenuItemType.Browse, Title="Browse" },
-                //new HomeMenuItem {Id = MenuItemType.Add, Title="Add" }
+                new HomeMenuItem {Id = MenuItemType.Browse, Title="My Dishes" }
             };
 
             ListViewMenu.ItemsSource = menuItems;

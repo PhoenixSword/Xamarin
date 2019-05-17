@@ -13,6 +13,7 @@ namespace Xamarin.Models
     {
         public string Id { get; set; }
         public string Name { get; set; }
+        public string Sum { get; set; }
         public byte[] Image { get; set; }
         [NotMapped]
         public ImageSource ImageSource { get; set; }

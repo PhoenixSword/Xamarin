@@ -16,11 +16,9 @@ namespace Xamarin.Views
     public partial class DishesPage
     {
         DishesViewModel viewModel;
-        string dbPath;
         public DishesPage()
         {
             InitializeComponent();
-            dbPath = DependencyService.Get<IPath>().GetDatabasePath(App.DBFILENAME);
             BindingContext = viewModel = new DishesViewModel();
         }
 
@@ -30,7 +28,6 @@ namespace Xamarin.Views
                 return;
             await Navigation.PushAsync(new NewDishPage(new DishDetailViewModel(dish)));
 
-            // Manually deselect item.
             DishesList.SelectedItem = null;
         }
 
@@ -51,7 +48,8 @@ namespace Xamarin.Views
                     Id = i.Id,
                     Name = i.Name,
                     Description = i.Description,
-                    Image = i.Image ,
+                    Image = i.Image,
+                    Sum = i.Sum,
                     ImageSource = i.Image != null ? ImageSource.FromStream(() => new MemoryStream(i.Image)) : ImageSource.FromFile("EmptyImage.jpg"),
                     Ingredients = i.Ingredients
                     

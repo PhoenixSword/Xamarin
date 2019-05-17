@@ -19,11 +19,13 @@ namespace Xamarin.Behaviors
 
         void OnEntryTextChanged(object sender, TextChangedEventArgs args)
         {
+            if (args.NewTextValue == null) return;
+
             var regex = new Regex(@"^\d+$");
 
             var isValid = regex.IsMatch(args.NewTextValue);
 
-            ((Entry)sender).TextColor = isValid ? Color.Green : Color.Red;
+            ((Entry) sender).TextColor = isValid ? Color.Green : Color.Red;
         }
     }
 }
