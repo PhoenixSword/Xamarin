@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using Xamarin.Forms;
@@ -89,12 +90,13 @@ namespace Xamarin.Views
         }
 
 
-        private void Add(object sender, EventArgs e)
+        private async void Add(object sender, EventArgs e)
         {
             viewModel.Add();
             IngredientsList.HeightRequest += 60;
             IngredientsList.ItemsSource = null;
             IngredientsList.ItemsSource = viewModel.Dish.Ingredients;
+            await scrollView.ScrollToAsync(stackLayout, ScrollToPosition.End, true);
         }
 
         private void Delete_Ingredient(object sender, EventArgs e)

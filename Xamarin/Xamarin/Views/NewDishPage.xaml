@@ -11,8 +11,8 @@
     </ContentPage.ToolbarItems>
     
     <ContentPage.Content>
-        <ScrollView BackgroundColor="Cornsilk">
-        <StackLayout Spacing="20" Padding="15">
+        <ScrollView x:Name="scrollView" BackgroundColor="Cornsilk">
+            <StackLayout x:Name="stackLayout" Spacing="20" Padding="15">
                 <Image x:Name="selectedImage" Source="{Binding selectedImageFile}" WidthRequest="200" HeightRequest="300">
                     <Image.GestureRecognizers>
                         <TapGestureRecognizer Tapped="Image_Clicked" />
@@ -37,23 +37,23 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                            <FlexLayout Margin="0,4" AlignItems="Center" JustifyContent="SpaceAround">
+                            <FlexLayout Margin="0,1" AlignItems="Center" JustifyContent="SpaceAround">
                                 <xamarin:CustomEntry Text="{Binding Name}" 
                                                      HorizontalTextAlignment="Center"
                                                      FontSize="18" 
-                                                     WidthRequest="90"
+                                                     WidthRequest="95"
                                                      HeightRequest="50"
                                                      Placeholder="Name"/>
                                 <xamarin:CustomEntry Text="{Binding Count}" 
                                                      HorizontalTextAlignment="Center"
                                                      FontSize="18" 
-                                                     WidthRequest="90"
+                                                     WidthRequest="95"
                                                      HeightRequest="50"
                                                      Placeholder="Count"/>
                                 <xamarin:CustomEntry Text="{Binding Price}" 
                                                      HorizontalTextAlignment="Center"
                                                      FontSize="18" 
-                                                     WidthRequest="90"
+                                                     WidthRequest="95"
                                                      HeightRequest="50"
                                                      Placeholder="Price">
                                     <Entry.Behaviors><behaviors:NumberValidationBehavior></behaviors:NumberValidationBehavior></Entry.Behaviors>
@@ -68,7 +68,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <Button Clicked="Add" Text="Add" BackgroundColor="Orange"/>
+                <Button Clicked="Add" Text="Add" BackgroundColor="Orange" />
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
