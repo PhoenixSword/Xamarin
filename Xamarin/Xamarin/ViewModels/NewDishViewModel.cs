@@ -22,7 +22,7 @@ namespace Xamarin.ViewModels
                 Name = "Dish name",
                 Description = "This is an dish description.",
                 Image = null,
-                Sum = "0",
+                Sum = 0,
                 ImageSource = ImageSource.FromFile("EmptyImage.jpg"),
                 Ingredients = new List<Ingredient>()
             };
@@ -65,7 +65,7 @@ namespace Xamarin.ViewModels
 
         public void Save(int sum)
         {
-            Dish.Sum = sum.ToString();
+            Dish.Sum = sum;
 
             if (string.IsNullOrEmpty(Dish.Name)) return;
             using (ApplicationContext db = new ApplicationContext(dbPath))
@@ -97,7 +97,7 @@ namespace Xamarin.ViewModels
 
         public void Add()
         {
-            Dish.Ingredients.Add(new Ingredient { Name = "", Count = "", Price = "0" });
+            Dish.Ingredients.Add(new Ingredient { Name = "", Count = "0", Price = 0 });
         }
 
         public void Remove(Ingredient ingredient)

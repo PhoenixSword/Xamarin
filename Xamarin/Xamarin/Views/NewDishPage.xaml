@@ -5,7 +5,12 @@
              xmlns:behaviors="clr-namespace:Xamarin.Behaviors;assembly=Xamarin"
              x:Class="Xamarin.Views.NewDishPage"
              Title="{Binding Title}">
-    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <xamarin:NumberToStringConverter x:Key="NumberConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Save" Icon="SaveIcon.png"  Clicked="Save_Clicked" Priority="2"/>
     </ContentPage.ToolbarItems>
@@ -44,13 +49,13 @@
                                                      WidthRequest="95"
                                                      HeightRequest="50"
                                                      Placeholder="Name"/>
-                                <xamarin:CustomEntry Text="{Binding Count}" 
+                                    <xamarin:CustomEntry Text="{Binding Count}" 
                                                      HorizontalTextAlignment="Center"
                                                      FontSize="18" 
                                                      WidthRequest="95"
                                                      HeightRequest="50"
                                                      Placeholder="Count"/>
-                                <xamarin:CustomEntry Text="{Binding Price}" 
+                                    <xamarin:CustomEntry Text="{Binding Price, Converter={StaticResource NumberConverter}}" 
                                                      HorizontalTextAlignment="Center"
                                                      FontSize="18" 
                                                      WidthRequest="95"

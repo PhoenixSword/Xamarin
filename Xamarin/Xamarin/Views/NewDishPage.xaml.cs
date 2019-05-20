@@ -48,7 +48,7 @@ namespace Xamarin.Views
                 var sum = 0;
                 foreach (var item in viewModel.Dish.Ingredients)
                 {
-                    sum += int.Parse(item.Price);
+                    sum += item.Price;
                 }
 
                 viewModel.Save(sum);

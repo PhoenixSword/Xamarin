@@ -1,12 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xamarin="clr-namespace:Xamarin;assembly=Xamarin"
              x:Class="Xamarin.Views.DishesPage"
               Title="{Binding Title}">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add" Icon="AddIcon.png" Clicked="AddItem_Clicked" />
     </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <xamarin:NumberToStringConverter x:Key="NumberConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <StackLayout>
         <ListView x:Name="DishesList"
@@ -42,7 +48,7 @@
                                                LineBreakMode="NoWrap"
                                                Style="{DynamicResource ListItemDetailTextStyle}"
                                                FontSize="16" />
-                                        <Label Text="{Binding Sum}" 
+                                        <Label Text="{Binding Sum, Converter={StaticResource NumberConverter}}" 
                                                HorizontalTextAlignment="Start"
                                                LineBreakMode="NoWrap"
                                                Style="{DynamicResource ListItemDetailTextStyle}"
