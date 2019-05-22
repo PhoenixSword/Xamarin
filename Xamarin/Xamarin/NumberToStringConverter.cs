@@ -12,10 +12,10 @@ namespace Xamarin
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var result = 0;
+            double result = 0;
             try
             {
-                result = int.Parse(value.ToString());
+                result = double.Parse(value.ToString().Replace(",", "."));
             }
             catch (Exception e)
             {

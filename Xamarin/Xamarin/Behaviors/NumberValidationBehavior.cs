@@ -21,7 +21,7 @@ namespace Xamarin.Behaviors
         {
             if (args.NewTextValue == null) return;
 
-            var regex = new Regex(@"^\d+$");
+            var regex = new Regex(@"^\d+(?:\.\d+)?(?:\,\d+)?$");
 
             var isValid = regex.IsMatch(args.NewTextValue);
 

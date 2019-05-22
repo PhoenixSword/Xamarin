@@ -4,11 +4,15 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Xamarin.Forms;
 using Xamarin.Models;
+using Xamarin.Services;
 
 namespace Xamarin.ViewModels
 {
     public class NewDishViewModel : BaseViewModel
     {
+
+        DishesService dishesService = new DishesService();
+
         readonly string dbPath;
         public Dish Dish { get; set; }
         public string Name { get; set; }
@@ -63,7 +67,7 @@ namespace Xamarin.ViewModels
             }
         }
 
-        public void Save(int sum)
+        public void Save(double sum)
         {
             Dish.Sum = sum;
 
@@ -84,10 +88,13 @@ namespace Xamarin.ViewModels
                 }
                 db.SaveChanges();
             }
+
+            dishesService.UpdateDishes(Dish);
         }
 
         public void Delete()
         {
+            dishesService.DeleteDishes(Dish.Id);
             using (ApplicationContext db = new ApplicationContext(dbPath))
             {
                 db.Dishes.Remove(Dish);

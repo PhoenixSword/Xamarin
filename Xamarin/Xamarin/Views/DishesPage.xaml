@@ -5,7 +5,9 @@
              x:Class="Xamarin.Views.DishesPage"
               Title="{Binding Title}">
 
+ 
     <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Refresh" Icon="RefreshIcon.png" Command="{Binding LoadDishesCommand}" />
         <ToolbarItem Text="Add" Icon="AddIcon.png" Clicked="AddItem_Clicked" />
     </ContentPage.ToolbarItems>
     <ContentPage.Resources>
@@ -14,7 +16,10 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <StackLayout>
+    <StackLayout BackgroundColor="Cornsilk">
+        <AbsoluteLayout x:Name="loading" HorizontalOptions="Center" Margin="0, 250, 0, 0">
+            <ActivityIndicator IsRunning="True"/>
+        </AbsoluteLayout>
         <ListView x:Name="DishesList"
                 ItemsSource="{Binding}"
                 VerticalOptions="FillAndExpand"
@@ -24,7 +29,7 @@
                 IsRefreshing="{Binding IsBusy, Mode=OneWay}"
                 CachingStrategy="RecycleElement"
                 ItemSelected="OnItemSelected"
-                BackgroundColor="Cornsilk">
+                SeparatorColor="White">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>

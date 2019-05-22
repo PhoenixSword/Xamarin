@@ -15,11 +15,13 @@ namespace Xamarin.Views
     [DesignTimeVisible(true)]
     public partial class DishesPage
     {
+        string dbPath = DependencyService.Get<IPath>().GetDatabasePath(App.DBFILENAME);
         DishesViewModel viewModel;
         public DishesPage()
         {
             InitializeComponent();
             BindingContext = viewModel = new DishesViewModel();
+            DishesList.ItemsSource = viewModel.Dishes;
         }
 
         async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
@@ -37,27 +39,12 @@ namespace Xamarin.Views
         }
 
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
-            string dbPath = DependencyService.Get<IPath>().GetDatabasePath(App.DBFILENAME);
-            
-            using (ApplicationContext db = new ApplicationContext(dbPath))
-            {
-                var list = db.Dishes.Select(i => new Dish
-                {
-                    Id = i.Id,
-                    Name = i.Name,
-                    Description = i.Description,
-                    Image = i.Image,
-                    Sum = i.Sum,
-                    ImageSource = i.Image != null ? ImageSource.FromStream(() => new MemoryStream(i.Image)) : ImageSource.FromFile("EmptyImage.jpg"),
-                    Ingredients = i.Ingredients
-                    
-                }).ToList();
-                DishesList.ItemsSource = list;
-            }
-            
+            loading.IsVisible = true;
+            await viewModel.GetDishes();
             base.OnAppearing();
+            loading.IsVisible = false;
         }
     }
 }

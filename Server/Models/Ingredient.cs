@@ -1,10 +1,6 @@
-﻿using SQLiteNetExtensions.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xamarin.Forms;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Xamarin.Models
+namespace Server.Models
 {
     public class Ingredient
     {
@@ -13,9 +9,8 @@ namespace Xamarin.Models
         public string Count { get; set; }
         public double Price { get; set; }
 
-        [ForeignKey(typeof(Dish))]
+        [ForeignKey("Dish")]
         public string DishId { get; set; }
-        [ManyToOne]
         public Dish Dish { get; set; }
     }
 }

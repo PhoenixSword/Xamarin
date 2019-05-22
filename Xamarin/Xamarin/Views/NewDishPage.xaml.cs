@@ -5,6 +5,7 @@ using Plugin.Media;
 using Plugin.Media.Abstractions;
 using Xamarin.Forms;
 using Xamarin.Models;
+using Xamarin.Services;
 using Xamarin.ViewModels;
 
 namespace Xamarin.Views
@@ -45,7 +46,7 @@ namespace Xamarin.Views
         {
             try
             {
-                var sum = 0;
+                double sum = 0;
                 foreach (var item in viewModel.Dish.Ingredients)
                 {
                     sum += item.Price;
@@ -58,6 +59,7 @@ namespace Xamarin.Views
                 DisplayAlert("Error", exception.Message, "OK");
                 return;
             }
+
             Navigation.PopAsync();
         }
         private void Delete_Clicked(object sender, EventArgs e)
