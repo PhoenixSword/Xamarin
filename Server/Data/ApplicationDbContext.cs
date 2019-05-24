@@ -4,9 +4,9 @@ using Server.Models;
 
 namespace Server.Data
 {
-    public sealed class ApplicationDbContext : IdentityDbContext
+    public sealed class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public ApplicationDbContext(DbContextOptions options)
             : base(options)
         {
         }

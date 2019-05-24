@@ -14,5 +14,5 @@
             <Image x:Key="EmptyImage" Source="DeleteIcon.png" />
         </ResourceDictionary>
     </Application.Resources>
-    
+
 </Application>

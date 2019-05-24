@@ -15,27 +15,51 @@ namespace Xamarin.Services
     class DishesService
     {
         string path = "http://192.168.0.141:8080/api/dish/";
-        HttpClient client = new HttpClient();
+
+        readonly HttpClient client = new HttpClient();
+
         public async Task<IEnumerable<Dish>> GetDishes()
         {
-            string result = await client.GetStringAsync(path + "getdishes");
-            return JsonConvert.DeserializeObject<List<Dish>>(result);
+            try
+            {
+                client.Timeout = TimeSpan.FromMilliseconds(4000);
+                var result = await client.GetStringAsync(path + "getdishes");
+                return JsonConvert.DeserializeObject<List<Dish>>(result);
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public async void DeleteDishes(string id)
         {
-            await client.DeleteAsync(path + "deletedishes?id=" + id);
+            try
+            {
+                client.Timeout = TimeSpan.FromMilliseconds(3000);
+                var result = await client.DeleteAsync(path + "deletedishes?id=" + id);
+            }
+            catch (Exception e)
+            {
+                // ignored
+            }
         }
 
-        public void UpdateDishes(Dish dish)
+        public async void UpdateDishes(Dish dish)
         {
-            dish = dish.Map();
-            var json = JsonConvert.SerializeObject(dish);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            var result = client.PostAsync(path+ "updatedishes", content).Result;
-            var _ = result;
+            try
+            {
+                client.Timeout = TimeSpan.FromMilliseconds(3000);
+                dish = dish.Map();
+                var json = JsonConvert.SerializeObject(dish);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                await client.PostAsync(path + "updatedishes", content);
+            }
+            catch (Exception e)
+            {
+                // ignored
+            }
         }
-
     }
 }

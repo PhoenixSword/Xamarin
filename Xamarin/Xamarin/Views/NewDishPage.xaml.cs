@@ -32,7 +32,7 @@ namespace Xamarin.Views
             InitializeComponent();
             BindingContext = viewModel = new NewDishViewModel(dishDetail);
 
-            var deleteButton = new ToolbarItem {Text = "Delete", Icon = "DeleteIcon.png"};
+            var deleteButton = new ToolbarItem {Text = "Delete", IconImageSource = "DeleteIcon.png"};
             deleteButton.Clicked += Delete_Clicked;
             ToolbarItems.Add(deleteButton);
 
@@ -44,28 +44,20 @@ namespace Xamarin.Views
 
         private void Save_Clicked(object sender, EventArgs e)
         {
-            try
+            double sum = 0;
+            foreach (var item in viewModel.Dish.Ingredients)
             {
-                double sum = 0;
-                foreach (var item in viewModel.Dish.Ingredients)
-                {
-                    sum += item.Price;
-                }
+                sum += item.Price;
+            }
 
-                viewModel.Save(sum);
-            }
-            catch (Exception exception)
-            {
-                DisplayAlert("Error", exception.Message, "OK");
-                return;
-            }
+            viewModel.Save(sum);
 
             Navigation.PopAsync();
         }
-        private void Delete_Clicked(object sender, EventArgs e)
+        private async void Delete_Clicked(object sender, EventArgs e)
         {
             viewModel.Delete();
-            Navigation.PopAsync();
+            await Navigation.PopAsync();
         }
 
         private async void Image_Clicked(object sender, EventArgs e)

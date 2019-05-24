@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using Microsoft.EntityFrameworkCore;
 using Xamarin.Forms;
 using Xamarin.Models;
@@ -10,16 +11,12 @@ namespace Xamarin.ViewModels
 {
     public class NewDishViewModel : BaseViewModel
     {
-
-        DishesService dishesService = new DishesService();
-
-        readonly string dbPath;
+        readonly DishesService dishesService = new DishesService();
         public Dish Dish { get; set; }
         public string Name { get; set; }
 
         public NewDishViewModel()
         {
-            dbPath = DependencyService.Get<IPath>().GetDatabasePath(App.DBFILENAME);
             Title = "Add Dish";
             Dish = new Dish
             {
@@ -34,7 +31,6 @@ namespace Xamarin.ViewModels
 
         public NewDishViewModel(DishDetailViewModel dishDetail)
         {
-            dbPath = DependencyService.Get<IPath>().GetDatabasePath(App.DBFILENAME);
             Title = "Edit Dish";
             Dish = new Dish
             {
@@ -70,36 +66,28 @@ namespace Xamarin.ViewModels
         public void Save(double sum)
         {
             Dish.Sum = sum;
-
             if (string.IsNullOrEmpty(Dish.Name)) return;
-            using (ApplicationContext db = new ApplicationContext(dbPath))
+            if (string.IsNullOrEmpty(Dish.Id))
+                db.Dishes.Add(Dish);
+            else
             {
-                if (string.IsNullOrEmpty(Dish.Id))
-                    db.Dishes.Add(Dish);
-                else
+                var listIngredients = db.Ingredients.Where(t => t.DishId == Dish.Id).Except(Dish.Ingredients);
+
+                foreach (var item in listIngredients)
                 {
-                    var listIngredients = db.Ingredients.Where(t => t.DishId == Dish.Id).Except(Dish.Ingredients);
-
-                    foreach (var item in listIngredients)
-                    {
-                        db.Ingredients.Remove(item);
-                    }
-                    db.Update(Dish);
+                    db.Ingredients.Remove(item);
                 }
-                db.SaveChanges();
+                db.Update(Dish);
             }
-
+            db.SaveChanges();
             dishesService.UpdateDishes(Dish);
         }
 
         public void Delete()
         {
+            db.Dishes.Remove(Dish);
+            db.SaveChanges();
             dishesService.DeleteDishes(Dish.Id);
-            using (ApplicationContext db = new ApplicationContext(dbPath))
-            {
-                db.Dishes.Remove(Dish);
-                db.SaveChanges();
-            }
         }
 
         public void Add()
