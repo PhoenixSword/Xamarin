@@ -34,6 +34,9 @@
     <Compile Update="Views\DishesPage.xaml.cs">
       <DependentUpon>DishesPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\NewDishPage.xaml.cs">
       <DependentUpon>NewDishPage.xaml</DependentUpon>
     </Compile>

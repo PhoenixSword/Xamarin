@@ -4,19 +4,25 @@
              x:Class="Xamarin.Views.MenuPage"
              Title="Menu">
 
-    <StackLayout VerticalOptions="FillAndExpand" BackgroundColor="Cornsilk">
-        <ListView x:Name="ListViewMenu"
-                    HasUnevenRows="True">
+    <StackLayout VerticalOptions="FillAndExpand" BackgroundColor="{StaticResource Background}" Padding="0, 50, 0, 0">
+
+        <Image x:Name="selectedImage" WidthRequest="100" HeightRequest="200"/>
+        <Label x:Name="Name" HorizontalTextAlignment="Center" FontSize="20" />
+
+        <ListView x:Name="ListViewMenu" HasUnevenRows="True" Margin="0, 50, 0, 0">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
                         <Grid Padding="10">
-                            <Label Text="{Binding Title}" FontSize="20"/>
+                            <Label Text="{Binding Title}" HorizontalTextAlignment="Center" FontSize="24"/>
                         </Grid>
+
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
+        <Button Text="Exit" BackgroundColor="{StaticResource ItemColor}" Clicked="Button_OnClicked" FontSize="24"/>
     </StackLayout>
 
 </ContentPage>

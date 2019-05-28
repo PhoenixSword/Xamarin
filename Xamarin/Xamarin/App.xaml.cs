@@ -15,22 +15,15 @@ using Xamarin.Views;
 
 namespace Xamarin
 {
-    public partial class App : Application
+    public partial class App
     {
         public const string DBFILENAME = "app.db";
-        public bool isReachable;
 
         public App()
         {
             InitializeComponent();
             MainPage = new MainPage();
         }
-
-        public async void Check()
-        {
-            isReachable = await CrossConnectivity.Current.IsReachable("http://192.168.0.141:8080");
-        }
-
         protected override void OnStart()
         {
             // Handle when your app starts

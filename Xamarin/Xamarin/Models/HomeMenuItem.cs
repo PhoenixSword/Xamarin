@@ -6,7 +6,9 @@ namespace Xamarin.Models
 {
     public enum MenuItemType
     {
-        Browse
+        MyDishes,
+        Settings,
+        Exit
     }
     public class HomeMenuItem
     {

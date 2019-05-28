@@ -16,7 +16,7 @@
     </ContentPage.ToolbarItems>
     
     <ContentPage.Content>
-        <ScrollView x:Name="scrollView" BackgroundColor="Cornsilk">
+        <ScrollView x:Name="scrollView" BackgroundColor="{StaticResource Background}">
             <StackLayout x:Name="stackLayout" Spacing="20" Padding="15">
                 <Image x:Name="selectedImage" Source="{Binding selectedImageFile}" WidthRequest="200" HeightRequest="300">
                     <Image.GestureRecognizers>
@@ -73,7 +73,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <Button Clicked="Add" Text="Add" BackgroundColor="Orange" />
+                <Button Clicked="Add" Text="Add" BackgroundColor="{StaticResource ItemColor}" />
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

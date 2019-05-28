@@ -9,10 +9,12 @@ namespace Xamarin
 
         public DbSet<Dish> Dishes { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<Profile> Profiles { get; set; }
 
         public ApplicationContext(string databasePath)
         {
             _databasePath = databasePath;
+            Database.EnsureCreated();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

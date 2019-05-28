@@ -19,15 +19,23 @@ namespace Xamarin.Views
         {
             InitializeComponent();
             MasterBehavior = MasterBehavior.Popover;
-
-            MenuPages.Add((int)MenuItemType.Browse, (NavigationPage)Detail);
+            MenuPages.Add((int)MenuItemType.MyDishes, new NavigationPage(new DishesPage()));
+            MenuPages.Add((int)MenuItemType.Settings, new NavigationPage(new SettingsPage()));
         }
 
         public async Task NavigateFromMenu(int id)
         {
             if (!MenuPages.ContainsKey(id))
             {
-                if (id == (int) MenuItemType.Browse) MenuPages.Add(id, new NavigationPage(new DishesPage()));
+                switch (id)
+                {
+                    case (int) MenuItemType.MyDishes:
+                        MenuPages.Add(id, new NavigationPage(new DishesPage()));
+                        break;
+                    case (int) MenuItemType.Settings:
+                        MenuPages.Add(id, new NavigationPage(new SettingsPage()));
+                        break;
+                }
             }
 
             var newPage = MenuPages[id];

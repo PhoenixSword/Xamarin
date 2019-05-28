@@ -27,19 +27,32 @@ namespace Xamarin.Views
             BindingContext = viewModel = new DishesViewModel();
             DishesList.ItemsSource = viewModel.Dishes;
             MessagingCenter.Subscribe<object, bool>(this, "Connection", (s, e) => {
-                Device.BeginInvokeOnMainThread(() =>
+                Device.BeginInvokeOnMainThread(async () =>
                 {
-                    reachLabel.BackgroundColor = e ? Color.Green : Color.Gray;
-                    reachLabel.Text = e ? "Successful connection to the server" : "Could not connect to server";
-                    reachLabel.IsVisible = true;
+                    connectionLabel.BackgroundColor = e ? Color.Green : Color.Gray;
+                    connectionLabel.Text = e ? "Back online" : "No connection";
 
-                   
+                    if (connectionLabel.IsVisible && e)
+                    {
+
+                        await connectionLabel.FadeTo(0, 2000);
+                        Device.StartTimer(TimeSpan.FromSeconds(2), () =>
+                        {
+                            connectionRow.Height = 0;
+                            return false;
+                        });
+                    }
+                    else if(!e)
+                    {
+                        connectionLabel.IsVisible = true;
+                        connectionRow.Height = 20;
+                        await connectionLabel.FadeTo(1, 500);
+                    }
+                    
                 });
             });
-            Thread thread = new Thread(Check) {IsBackground = true};
+            var thread = new Thread(Check) {IsBackground = true};
             thread.Start();
-            
-
         }
         public void Check()
         {
@@ -49,7 +62,8 @@ namespace Xamarin.Views
                     {
                         MessagingCenter.Send<object, bool>(this, "Connection", task.Result);
                     });
-                Thread.Sleep(TimeSpan.FromSeconds(1));
+
+                Thread.Sleep(TimeSpan.FromSeconds(5));
             }
         }
 

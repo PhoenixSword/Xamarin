@@ -6,12 +6,12 @@
     <Application.Resources>
         <ResourceDictionary>
             <!--Global Styles-->
-            <Color x:Key="NavigationPrimary">#FFA500</Color>
+            <Color x:Key="Background">Cornsilk</Color>
+            <Color x:Key="ItemColor">Orange</Color>
             <Style TargetType="NavigationPage">
-                <Setter Property="BarBackgroundColor" Value="{StaticResource NavigationPrimary}" />
+                <Setter Property="BarBackgroundColor" Value="{StaticResource ItemColor}" />
                 <Setter Property="BarTextColor" Value="White" />
             </Style>
-            <Image x:Key="EmptyImage" Source="DeleteIcon.png" />
         </ResourceDictionary>
     </Application.Resources>
 
