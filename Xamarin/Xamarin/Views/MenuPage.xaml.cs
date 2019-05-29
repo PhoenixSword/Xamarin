@@ -41,8 +41,11 @@ namespace Xamarin.Views
                 await RootPage.NavigateFromMenu(id);
             };
 
-            MessagingCenter.Subscribe<object, Profile>(this, "Settings", (s, profile) => {
-                selectedImage.Source = ImageSource.FromStream(() => new MemoryStream(profile.Image));
+            MessagingCenter.Subscribe<object, Profile>(this, "Settings", (s, profile) =>
+            {
+                selectedImage.Source = profile.Image != null
+                    ? ImageSource.FromStream(() => new MemoryStream(profile.Image))
+                    : ImageSource.FromFile("Profile.jpg");
                 Name.Text = profile.Name;
             });
 

@@ -51,20 +51,15 @@ namespace Xamarin.Views
                     
                 });
             });
-            var thread = new Thread(Check) {IsBackground = true};
-            thread.Start();
-        }
-        public void Check()
-        {
-            while (true)
+
+            Device.StartTimer(TimeSpan.FromSeconds(4), () =>
             {
                 CrossConnectivity.Current.IsRemoteReachable("192.168.0.141", 8080).ContinueWith(task =>
-                    {
-                        MessagingCenter.Send<object, bool>(this, "Connection", task.Result);
-                    });
-
-                Thread.Sleep(TimeSpan.FromSeconds(5));
-            }
+                {
+                    MessagingCenter.Send<object, bool>(this, "Connection", task.Result);
+                });
+                return true;
+            });
         }
 
         async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
@@ -85,10 +80,10 @@ namespace Xamarin.Views
         {
             var result = await viewModel.GetDishes();
 
-            if (result == null)
-            {
-                await DisplayAlert("Error", "Connection refused", "OK");
-            }
+            //if (result == null)
+            //{
+            //    await DisplayAlert("Error", "Connection refused", "OK");
+            //}
         }
 
 

@@ -19,13 +19,24 @@ namespace Xamarin.ViewModels
         public SettingsViewModel()
         {
             Title = "Settings";
+
+            if (db.Profiles.FirstOrDefault() == null)
+            {
+                var profile = dishesService.GetProfile();
+                if (profile != null)
+                {
+                    db.Profiles.Add(profile);
+                    db.SaveChanges();
+                }
+            }
+            
             Profile = db.Profiles.Select(p => new Profile
             {
                 Id = p.Id,
                 Name = p.Name,
                 Image = p.Image,
-                ImageSource = p.Image != null ? ImageSource.FromStream(() => new MemoryStream(p.Image)) : ImageSource.FromFile("Profile.jpg"),
-            }).FirstOrDefault() ?? new Profile {Name = "Unknown"};
+                ImageSource = p.Image != null ? ImageSource.FromStream(() => new MemoryStream(p.Image)) : ImageSource.FromFile("Profile.jpg")
+            }).FirstOrDefault() ?? new Profile {Name = "Unknown", ImageSource = ImageSource.FromFile("Profile.jpg") };
 
             MessagingCenter.Send<object, Profile>(this, "Settings", Profile);
         }
@@ -62,7 +73,7 @@ namespace Xamarin.ViewModels
 
             MessagingCenter.Send<object, Profile>(this, "Settings", Profile);
 
-            //dishesService.UpdateDishes(Dish);
+            dishesService.UpdateProfile(Profile);
         }
 
     }

@@ -58,7 +58,7 @@ namespace Xamarin.ViewModels
         public async Task<HttpResponseMessage> GetDishes()
         {
 
-            IEnumerable<Dish> dishes = await dishesService.GetDishes();
+            var dishes = await dishesService.GetDishes();
 
             if (dishes == null)
             {

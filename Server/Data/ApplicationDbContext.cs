@@ -12,6 +12,7 @@ namespace Server.Data
         }
         public DbSet<Dish> Dishes { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<Profile> Profiles { get; set; }
 
     }
 }

@@ -19,6 +19,7 @@ namespace Server.Data.Repositories.Concrete
     {
         private readonly ApplicationDbContext _ctx;
         private IEnumerable<Dish> Dishes => _ctx.Dishes.Include(d => d.Ingredients).ToList();
+        private Profile Profile => _ctx.Profiles.FirstOrDefault();
 
         public Repo(ApplicationDbContext applicationDbContext)
         {
@@ -29,6 +30,22 @@ namespace Server.Data.Repositories.Concrete
         {
             var list = Dishes.Select(d => d.Map()).ToList();
             return list;
+        }
+
+        public Profile GetProfile()
+        {
+            return Profile;
+        }
+        public void UpdateProfile(Profile profile)
+        {
+            _ctx.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            if (Profile != null)
+            {
+                _ctx.Remove(Profile);
+                _ctx.SaveChanges();
+            }
+            _ctx.Add(profile);
+            _ctx.SaveChanges();
         }
 
         public void DeleteDishes(string id)

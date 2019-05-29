@@ -17,7 +17,6 @@ namespace Xamarin.Models.Mappings
                 Ingredients = dish.Ingredients.Select(i=>i.Map()).ToList(),
                 Name = dish.Name,
                 Sum = dish.Sum
-
             };
         }
     }

@@ -9,6 +9,8 @@ namespace Server.Data.Repositories.Abstract
         IEnumerable<Dish> GetDishes();
         void DeleteDishes(string id);
         void UpdateDishes(Dish dish);
+        Profile GetProfile();
+        void UpdateProfile(Profile profile);
 
     }
     

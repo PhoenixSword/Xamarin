@@ -61,5 +61,35 @@ namespace Xamarin.Services
                 // ignored
             }
         }
+
+        public Profile GetProfile()
+        {
+            try
+            {
+                client.Timeout = TimeSpan.FromMilliseconds(3000);
+                var result = client.GetStringAsync(path + "getprofile").Result;
+                return JsonConvert.DeserializeObject<Profile>(result);
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+        public async void UpdateProfile(Profile profile)
+        {
+            try
+            {
+                client.Timeout = TimeSpan.FromMilliseconds(3000);
+                profile = profile.Map();
+                var json = JsonConvert.SerializeObject(profile);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                await client.PostAsync(path + "updateprofile", content);
+            }
+            catch (Exception e)
+            {
+                // ignored
+            }
+        }
     }
 }
