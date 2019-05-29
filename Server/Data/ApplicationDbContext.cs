@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using Server.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Xamarin.Models.Models;
 
 namespace Server.Data
 {

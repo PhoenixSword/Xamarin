@@ -17,7 +17,7 @@ namespace Xamarin
             {
                 result = double.Parse(value.ToString().Replace(",", "."));
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 // ignored
             }

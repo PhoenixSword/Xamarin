@@ -1,17 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
-using Microsoft.EntityFrameworkCore;
 using Xamarin.Forms;
-using Xamarin.Models;
+using Xamarin.Models.Models;
 using Xamarin.Services;
 
 namespace Xamarin.ViewModels
 {
     public class NewDishViewModel : BaseViewModel
     {
-        readonly DishesService dishesService = new DishesService();
+        readonly DishesService _dishesService = new DishesService();
         public Dish Dish { get; set; }
         public string Name { get; set; }
 
@@ -68,26 +66,26 @@ namespace Xamarin.ViewModels
             Dish.Sum = sum;
             if (string.IsNullOrEmpty(Dish.Name)) return;
             if (string.IsNullOrEmpty(Dish.Id))
-                db.Dishes.Add(Dish);
+                Db.Dishes.Add(Dish);
             else
             {
-                var listIngredients = db.Ingredients.Where(t => t.DishId == Dish.Id).Except(Dish.Ingredients);
+                var listIngredients = Db.Ingredients.Where(t => t.DishId == Dish.Id).Except(Dish.Ingredients);
 
                 foreach (var item in listIngredients)
                 {
-                    db.Ingredients.Remove(item);
+                    Db.Ingredients.Remove(item);
                 }
-                db.Update(Dish);
+                Db.Update(Dish);
             }
-            db.SaveChanges();
-            dishesService.UpdateDishes(Dish);
+            Db.SaveChanges();
+            _dishesService.UpdateDishes(Dish);
         }
 
         public void Delete()
         {
-            db.Dishes.Remove(Dish);
-            db.SaveChanges();
-            dishesService.DeleteDishes(Dish.Id);
+            Db.Dishes.Remove(Dish);
+            Db.SaveChanges();
+            _dishesService.DeleteDishes(Dish.Id);
         }
 
         public void Add()

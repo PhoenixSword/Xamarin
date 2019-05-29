@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
-using Plugin.Media.Abstractions;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using Xamarin.Forms;
 
-namespace Xamarin.Models
+namespace Xamarin.Models.Models
 {
     public class Profile
     {

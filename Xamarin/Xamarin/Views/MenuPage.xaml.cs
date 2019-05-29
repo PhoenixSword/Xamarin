@@ -1,16 +1,10 @@
-﻿using Xamarin.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using Android.App;
 using Java.Lang;
-using Plugin.Media.Abstractions;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-using Xamarin.ViewModels;
-using static Xamarin.Forms.Device;
-using Application = Xamarin.Forms.Application;
+using Xamarin.Models.Models;
 
 namespace Xamarin.Views
 {
@@ -20,11 +14,11 @@ namespace Xamarin.Views
     public partial class MenuPage
     {
         MainPage RootPage => Application.Current.MainPage as MainPage;
-        List<HomeMenuItem> menuItems;
+
         public MenuPage()
         {
             InitializeComponent();
-            menuItems = new List<HomeMenuItem>
+            var menuItems = new List<HomeMenuItem>
             {
                 new HomeMenuItem {Id = MenuItemType.MyDishes, Title="My Dishes" },
                 new HomeMenuItem {Id = MenuItemType.Settings, Title="Settings" }
@@ -43,7 +37,7 @@ namespace Xamarin.Views
 
             MessagingCenter.Subscribe<object, Profile>(this, "Settings", (s, profile) =>
             {
-                selectedImage.Source = profile.Image != null
+                SelectedImage.Source = profile.Image != null
                     ? ImageSource.FromStream(() => new MemoryStream(profile.Image))
                     : ImageSource.FromFile("Profile.jpg");
                 Name.Text = profile.Name;

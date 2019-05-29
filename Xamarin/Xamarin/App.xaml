@@ -9,7 +9,7 @@
             <Color x:Key="Background">Cornsilk</Color>
             <Color x:Key="ItemColor">Orange</Color>
             <Style TargetType="NavigationPage">
-                <Setter Property="BarBackgroundColor" Value="{StaticResource ItemColor}" />
+                <Setter Property="BarBackgroundColor" Value="{DynamicResource ItemColor}" />
                 <Setter Property="BarTextColor" Value="White" />
             </Style>
         </ResourceDictionary>

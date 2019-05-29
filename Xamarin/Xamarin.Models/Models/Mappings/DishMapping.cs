@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 
-namespace Xamarin.Models.Mappings
+namespace Xamarin.Models.Models.Mappings
 {
     public static class DishMapping
     {
@@ -17,6 +14,7 @@ namespace Xamarin.Models.Mappings
                 Ingredients = dish.Ingredients.Select(i=>i.Map()).ToList(),
                 Name = dish.Name,
                 Sum = dish.Sum
+
             };
         }
     }

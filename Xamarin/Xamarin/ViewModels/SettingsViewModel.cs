@@ -1,36 +1,33 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
-using System.Net.Http;
-using Android.Content.Res;
-using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 using Xamarin.Forms;
-using Xamarin.Models;
+using Xamarin.Models.Models;
 using Xamarin.Services;
 
 namespace Xamarin.ViewModels
 {
     public class SettingsViewModel : BaseViewModel
     {
-        readonly DishesService dishesService = new DishesService();
-        public Profile Profile { get; set; }
-        public string Name { get; set; }
+        readonly DishesService _dishesService = new DishesService();
+        public Profile Profile { get; }
 
         public SettingsViewModel()
         {
             Title = "Settings";
 
-            if (db.Profiles.FirstOrDefault() == null)
+            if (Db.Profiles.FirstOrDefault() == null)
             {
-                var profile = dishesService.GetProfile();
+                Profile profile = null;
+                Task.Run(async() => await _dishesService.GetProfile()).ContinueWith(task => profile = task.Result);
                 if (profile != null)
                 {
-                    db.Profiles.Add(profile);
-                    db.SaveChanges();
+                    Db.Profiles.Add(profile);
+                    Db.SaveChanges();
                 }
             }
             
-            Profile = db.Profiles.Select(p => new Profile
+            Profile = Db.Profiles.Select(p => new Profile
             {
                 Id = p.Id,
                 Name = p.Name,
@@ -64,16 +61,20 @@ namespace Xamarin.ViewModels
         {
             if (string.IsNullOrEmpty(Profile.Name)) return;
             if (string.IsNullOrEmpty(Profile.Id))
-                db.Profiles.Add(Profile);
+            {
+                Db.Profiles.Add(Profile);
+            }
             else
             {
-                db.Update(Profile);
+                var profile = Db.Profiles.Single();
+                profile.Name = Profile.Name;
+                profile.Image = Profile.Image;
             }
-            db.SaveChanges();
+            Db.SaveChanges();
 
             MessagingCenter.Send<object, Profile>(this, "Settings", Profile);
 
-            dishesService.UpdateProfile(Profile);
+            _dishesService.UpdateProfile(Profile);
         }
 
     }

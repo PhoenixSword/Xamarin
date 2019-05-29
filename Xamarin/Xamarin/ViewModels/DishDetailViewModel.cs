@@ -1,6 +1,4 @@
-﻿using System;
-
-using Xamarin.Models;
+﻿using Xamarin.Models.Models;
 
 namespace Xamarin.ViewModels
 {

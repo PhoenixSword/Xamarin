@@ -1,11 +1,8 @@
-﻿using Xamarin.Models;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
-using Plugin.Connectivity;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+using Xamarin.Models.Models;
 
 namespace Xamarin.Views
 {
@@ -32,7 +29,7 @@ namespace Xamarin.Views
                     case (int) MenuItemType.MyDishes:
                         MenuPages.Add(id, new NavigationPage(new DishesPage()));
                         break;
-                    case (int) MenuItemType.Settings:
+                    case (int)MenuItemType.Settings:
                         MenuPages.Add(id, new NavigationPage(new SettingsPage()));
                         break;
                 }

@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Internal;
 using Plugin.Connectivity;
 using Xamarin.Forms;
-using Xamarin.Models;
+using Xamarin.Models.Models;
 using Xamarin.ViewModels;
 
 namespace Xamarin.Views
@@ -19,36 +13,37 @@ namespace Xamarin.Views
     [DesignTimeVisible(true)]
     public partial class DishesPage
     {
-        private bool firstStart = true;
-        DishesViewModel viewModel;
+        private bool _firstStart = true;
+        private readonly DishesViewModel _viewModel;
         public DishesPage()
         {
             InitializeComponent();
-            BindingContext = viewModel = new DishesViewModel();
-            DishesList.ItemsSource = viewModel.Dishes;
-            MessagingCenter.Subscribe<object, bool>(this, "Connection", (s, e) => {
+            BindingContext = _viewModel = new DishesViewModel();
+            DishesList.ItemsSource = _viewModel.Dishes;
+            MessagingCenter.Subscribe<object, bool>(this, "Connection", (s, e) =>
+            {
                 Device.BeginInvokeOnMainThread(async () =>
                 {
-                    connectionLabel.BackgroundColor = e ? Color.Green : Color.Gray;
-                    connectionLabel.Text = e ? "Back online" : "No connection";
+                    ConnectionLabel.BackgroundColor = e ? Color.Green : Color.Gray;
+                    ConnectionLabel.Text = e ? "Back online" : "No connection";
 
-                    if (connectionLabel.IsVisible && e)
+                    if (ConnectionLabel.IsVisible && e)
                     {
 
-                        await connectionLabel.FadeTo(0, 2000);
+                        await ConnectionLabel.FadeTo(0, 2000);
                         Device.StartTimer(TimeSpan.FromSeconds(2), () =>
                         {
-                            connectionRow.Height = 0;
+                            ConnectionRow.Height = 0;
                             return false;
                         });
                     }
-                    else if(!e)
+                    else if (!e)
                     {
-                        connectionLabel.IsVisible = true;
-                        connectionRow.Height = 20;
-                        await connectionLabel.FadeTo(1, 500);
+                        ConnectionLabel.IsVisible = true;
+                        ConnectionRow.Height = 20;
+                        await ConnectionLabel.FadeTo(1, 500);
                     }
-                    
+
                 });
             });
 
@@ -78,7 +73,7 @@ namespace Xamarin.Views
 
         async void Refresh_Clicked(object sender, EventArgs e)
         {
-            var result = await viewModel.GetDishes();
+            await _viewModel.GetDishes();
 
             //if (result == null)
             //{
@@ -87,19 +82,19 @@ namespace Xamarin.Views
         }
 
 
-        protected override async void OnAppearing()
+        protected override void OnAppearing()
         {
-            if (firstStart)
+            if (_firstStart)
             {
-                loading.IsVisible = true;
-                await viewModel.GetDishes();
+                Loading.IsVisible = true;
+                Task.Run(()=> _viewModel.GetDishes());
             }
 
-            viewModel.LoadDishesCommand.Execute(null);
+            _viewModel.LoadDishesCommand.Execute(null);
             base.OnAppearing();
-            if (firstStart) loading.IsVisible = false;
-            firstStart = false;
-            //Empty.IsVisible = !viewModel.Dishes.Any();
+            if (!_firstStart) return;
+            Loading.IsVisible = false;
+            _firstStart = false;
         }
     }
 }

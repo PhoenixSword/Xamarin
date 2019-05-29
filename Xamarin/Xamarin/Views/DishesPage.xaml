@@ -7,8 +7,9 @@
 
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Refresh" Icon="RefreshIcon.png" Clicked="Refresh_Clicked" />
-        <ToolbarItem Text="Add" Icon="AddIcon.png" Clicked="AddItem_Clicked" />
+        <ToolbarItem Text="Refresh" Clicked="Refresh_Clicked" IconImageSource="RefreshIcon.png">
+        </ToolbarItem>
+        <ToolbarItem Text="Add" IconImageSource="AddIcon.png" Clicked="AddItem_Clicked" />
     </ContentPage.ToolbarItems>
 
     <ContentPage.Resources>
@@ -17,13 +18,13 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ScrollView>
-        <Grid BackgroundColor="{StaticResource Background}">
+        <Grid BackgroundColor="{DynamicResource Background}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition x:Name="connectionRow" Height="0"></RowDefinition>
+            <RowDefinition x:Name="ConnectionRow" Height="0"></RowDefinition>
         </Grid.RowDefinitions>
             <StackLayout Grid.Row="0" HeightRequest="300">
-                <AbsoluteLayout x:Name="loading" HorizontalOptions="Center" Margin="0, 250, 0, 0">
+                <AbsoluteLayout x:Name="Loading" HorizontalOptions="Center" Margin="0, 250, 0, 0">
                     <ActivityIndicator IsRunning="True"/>
                 </AbsoluteLayout>
                 <ListView x:Name="DishesList"
@@ -73,7 +74,7 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </StackLayout>
-            <Label Grid.Row="1" x:Name="connectionLabel" Opacity="0" HorizontalTextAlignment="Center" HeightRequest="20" AbsoluteLayout.LayoutFlags="All" BackgroundColor="Gray" TextColor="White" FontSize="14"/>
+            <Label Grid.Row="1" x:Name="ConnectionLabel" Opacity="0" HorizontalTextAlignment="Center" HeightRequest="20" AbsoluteLayout.LayoutFlags="All" BackgroundColor="Gray" TextColor="White" FontSize="14"/>
         </Grid>
     </ScrollView>
 </ContentPage>

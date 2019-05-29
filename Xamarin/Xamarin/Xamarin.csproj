@@ -22,11 +22,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Xamarin.Models\Xamarin.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="Mono.Android">
       <HintPath>C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\MonoAndroid\v9.0\Mono.Android.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.Forms.Platform.iOS">
-      <HintPath>C:\Microsoft\Xamarin\NuGet\xamarin.forms\4.0.0.346134-pre9\lib\Xamarin.iOS10\Xamarin.Forms.Platform.iOS.dll</HintPath>
     </Reference>
   </ItemGroup>
 

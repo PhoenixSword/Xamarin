@@ -1,17 +1,9 @@
-﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-using Server.Data;
 using Server.Data.Repositories.Abstract;
-using Server.Models;
-using Server.Models.Mappings;
+using Xamarin.Models.Models;
+using Xamarin.Models.Models.Mappings;
 
 namespace Server.Data.Repositories.Concrete
 {
@@ -51,8 +43,12 @@ namespace Server.Data.Repositories.Concrete
         public void DeleteDishes(string id)
         {
             var dish = Dishes.FirstOrDefault(d=>d.Id == id);
-            _ctx.Dishes.Remove(dish);
-            _ctx.Ingredients.RemoveRange(dish.Ingredients);
+            if (dish != null)
+            {
+                _ctx.Dishes.Remove(dish);
+                _ctx.Ingredients.RemoveRange(dish.Ingredients);
+            }
+
             _ctx.SaveChanges();
         }
 

@@ -8,20 +8,20 @@ namespace Xamarin.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        static string dbPath = DependencyService.Get<IPath>().GetDatabasePath(App.DBFILENAME);
-        protected ApplicationContext db = new ApplicationContext(dbPath);
-        string title = string.Empty;
-        bool isBusy ;
+        static string dbPath = DependencyService.Get<IPath>().GetDatabasePath(App.Dbfilename);
+        protected readonly ApplicationContext Db = new ApplicationContext(dbPath);
+        string _title = string.Empty;
+        bool _isBusy ;
         public string Title
         {
-            get => title;
-            set => SetProperty(ref title, value);
+            get => _title;
+            set => SetProperty(ref _title, value);
         }
 
         public bool IsBusy
         {
-            get { return isBusy; }
-            set { SetProperty(ref isBusy, value); }
+            get { return _isBusy; }
+            set { SetProperty(ref _isBusy, value); }
         }
 
         protected bool SetProperty<T>(ref T backingStore, T value,

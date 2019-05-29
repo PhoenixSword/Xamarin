@@ -1,43 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
+﻿using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Android.Database;
-using Android.Text.Style;
-using Newtonsoft.Json;
 using Xamarin.Forms;
-
-using Xamarin.Models;
+using Xamarin.Models.Models;
 using Xamarin.Services;
-using Xamarin.Views;
 
 namespace Xamarin.ViewModels
 {
     public class DishesViewModel : BaseViewModel
     {
-        readonly DishesService dishesService = new DishesService();
-        public ObservableCollection<Dish> Dishes { get; set; }
-        public Command LoadDishesCommand { get; set; }
+        private readonly DishesService _dishesService = new DishesService();
+        public ObservableCollection<Dish> Dishes { get; }
+        public Command LoadDishesCommand { get; }
         public DishesViewModel()
         {
             Title = "My Dishes";
             Dishes = new ObservableCollection<Dish>();
-            LoadDishesCommand = new Command(async () => await ExecuteLoadDishesCommand());
+            LoadDishesCommand = new Command( ExecuteLoadDishesCommand);
         }
 
 
-        public async Task ExecuteLoadDishesCommand()
+        private void ExecuteLoadDishesCommand()
         {
              if (IsBusy)
                 return;
 
              IsBusy = true;
-             var list = db.Dishes.Select(i => new Dish
+             var list = Db.Dishes.Select(i => new Dish
              {
                  Id = i.Id,
                  Name = i.Name,
@@ -58,23 +50,25 @@ namespace Xamarin.ViewModels
         public async Task<HttpResponseMessage> GetDishes()
         {
 
-            var dishes = await dishesService.GetDishes();
+            var dishes = await _dishesService.GetDishes();
 
             if (dishes == null)
             {
                 LoadDishesCommand.Execute(null);
                 return null;
             }
-            db.Database.EnsureCreated();
-            var list1 = dishes.ToList();
-            var list2 = db.Dishes.ToList();
+            Db.Database.EnsureCreated();
+            var enumerable = dishes as Dish[] ?? dishes.ToArray();
+            var list1 = enumerable.ToList();
+            var list2 = Db.Dishes.ToList();
             var listId = list1.Select(d => d.Id).Except(list2.Select(d => d.Id)).ToList();
             foreach (var id in listId)
             {
-                db.Dishes.Add(dishes.FirstOrDefault(d => d.Id == id));
+                var item = enumerable.FirstOrDefault(d => d.Id == id);
+                if (item != null) Db.Dishes.Add(item);
             }
 
-            db.SaveChanges();
+            Db.SaveChanges();
             LoadDishesCommand.Execute(null);
             return new HttpResponseMessage(new HttpStatusCode());
         }

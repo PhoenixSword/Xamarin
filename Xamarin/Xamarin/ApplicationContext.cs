@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Xamarin.Models;
+using Xamarin.Models.Models;
 
 namespace Xamarin
 {
-    public class ApplicationContext : DbContext
+    public sealed class ApplicationContext : DbContext
     {
         private string _databasePath;
 

@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using SQLiteNetExtensions.Attributes;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using Xamarin.Forms;
 
-namespace Server.Models
+namespace Xamarin.Models.Models
 {
     public class Dish
     {
@@ -9,8 +11,11 @@ namespace Server.Models
         public string Name { get; set; }
         public double Sum { get; set; }
         public byte[] Image { get; set; }
+        [NotMapped]
+        public ImageSource ImageSource { get; set; }
         public string Description { get; set; }
 
+        [OneToMany]
         public List<Ingredient> Ingredients { get; set; }
 
     }

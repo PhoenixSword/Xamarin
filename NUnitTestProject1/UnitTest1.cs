@@ -1,13 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using NUnitTestProject1;
-using Server.Models;
+using Xamarin.Models.Models;
 
-namespace Tests
+namespace NUnitTestProject1
 {
     public class Tests : TestBase
     {

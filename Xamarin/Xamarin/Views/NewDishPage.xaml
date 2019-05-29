@@ -12,13 +12,13 @@
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Save" Icon="SaveIcon.png"  Clicked="Save_Clicked" Priority="2"/>
+        <ToolbarItem Text="Save" IconImageSource="SaveIcon.png"  Clicked="Save_Clicked" Priority="2"/>
     </ContentPage.ToolbarItems>
     
     <ContentPage.Content>
-        <ScrollView x:Name="scrollView" BackgroundColor="{StaticResource Background}">
-            <StackLayout x:Name="stackLayout" Spacing="20" Padding="15">
-                <Image x:Name="selectedImage" Source="{Binding selectedImageFile}" WidthRequest="200" HeightRequest="300">
+        <ScrollView x:Name="ScrollView" BackgroundColor="{DynamicResource Background}">
+            <StackLayout x:Name="StackLayout" Spacing="20" Padding="15">
+                <Image x:Name="SelectedImage" Source="{Binding selectedImageFile}" WidthRequest="200" HeightRequest="300">
                     <Image.GestureRecognizers>
                         <TapGestureRecognizer Tapped="Image_Clicked" />
                     </Image.GestureRecognizers>
@@ -73,7 +73,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <Button Clicked="Add" Text="Add" BackgroundColor="{StaticResource ItemColor}" />
+                <Button Clicked="Add" Text="Add" BackgroundColor="{DynamicResource ItemColor}" />
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
