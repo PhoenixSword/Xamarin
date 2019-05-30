@@ -8,14 +8,15 @@ using Newtonsoft.Json;
 using Xamarin.Models.Models;
 using Xamarin.Models.Models.Mappings;
 
+using Xamarin.Forms;
 namespace Xamarin.Services
 {
     public class DishesService   
     {
         string path = "http://192.168.0.141:8080/api/dish/";
 
-        readonly HttpClient _client = new HttpClient();
-
+        private HttpClient _client = new HttpClient{DefaultRequestHeaders = {{"token", Application.Current.Properties["token"].ToString()}}};
+        
         public async Task<IEnumerable<Dish>> GetDishes()
         {
             try

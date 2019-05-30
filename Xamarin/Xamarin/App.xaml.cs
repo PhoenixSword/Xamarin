@@ -22,24 +22,37 @@ namespace Xamarin
         public App()
         {
             InitializeComponent();
-            MainPage = new MainPage();
+            if (Current.Properties.TryGetValue("Style", out var result)) SetStyle(int.Parse(Current.Properties["Style"].ToString()));
+           
+            if (!Current.Properties.TryGetValue("token", out var resultToken)) Current.Properties["token"] = "";
+
             MessagingCenter.Subscribe<object, int>(this, "Style", (s, e) =>
             {
-                Device.BeginInvokeOnMainThread( () =>
-                {
-                    switch (e)
-                    {
-                        case 0:
-                            Resources["Background"] = _style1["Background"];
-                            Resources["ItemColor"] = _style1["ItemColor"];
-                            break;
-                        case 1:
-                            Resources["Background"] = _style2["Background"];
-                            Resources["ItemColor"] = _style2["ItemColor"];
-                            break;
-                    }
-                });
+                Device.BeginInvokeOnMainThread( () => { SetStyle(e); Current.Properties["Style"] = e; });
             });
+            if (!Current.Properties["token"].ToString().Equals(""))
+            {
+                MainPage = new MainPage();
+            }
+            else
+            {
+                MainPage = new LoginPage();
+            }
+        }
+
+        private void SetStyle(int number)
+        {
+            switch (number)
+            {
+                case 0:
+                    Resources["Background"] = _style1["Background"];
+                    Resources["ItemColor"] = _style1["ItemColor"];
+                    break;
+                case 1:
+                    Resources["Background"] = _style2["Background"];
+                    Resources["ItemColor"] = _style2["ItemColor"];
+                    break;
+            }
         }
         protected override void OnStart()
         {

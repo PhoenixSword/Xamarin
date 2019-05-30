@@ -11,11 +11,9 @@ namespace Xamarin.ViewModels
     {
         readonly DishesService _dishesService = new DishesService();
         public Profile Profile { get; }
-
         public SettingsViewModel()
         {
             Title = "Settings";
-
             if (Db.Profiles.FirstOrDefault() == null)
             {
                 Profile profile = null;
@@ -37,6 +35,7 @@ namespace Xamarin.ViewModels
 
             MessagingCenter.Send<object, Profile>(this, "Settings", Profile);
         }
+
 
         public void SelectImage(Stream stream)
         {

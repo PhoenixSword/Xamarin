@@ -29,7 +29,7 @@ namespace Xamarin.Views
                     case (int) MenuItemType.MyDishes:
                         MenuPages.Add(id, new NavigationPage(new DishesPage()));
                         break;
-                    case (int)MenuItemType.Settings:
+                    case (int) MenuItemType.Settings:
                         MenuPages.Add(id, new NavigationPage(new SettingsPage()));
                         break;
                 }

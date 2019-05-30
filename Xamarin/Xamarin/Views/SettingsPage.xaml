@@ -6,24 +6,47 @@
              Title="{Binding Title}">
 
     <ContentPage.Content>
-        <ScrollView BackgroundColor="{DynamicResource Background}">
-            <StackLayout x:Name="StackLayout" Spacing="20" Padding="15">
-                <Image x:Name="SelectedImage" Source="{Binding selectedImageFile}" WidthRequest="200" HeightRequest="300">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="Image_Clicked" />
-                    </Image.GestureRecognizers>
-                </Image>
+        <AbsoluteLayout BackgroundColor="{DynamicResource Background}">
+            <ScrollView>
+                <StackLayout Spacing="20" Padding="15">
+                    <Image x:Name="SelectedImage" Source="{Binding selectedImageFile}" WidthRequest="200" HeightRequest="300">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Image_Clicked" />
+                        </Image.GestureRecognizers>
+                    </Image>
 
-                <xamarin:CustomEntry Text="{Binding Profile.Name}"  HorizontalTextAlignment="Center" FontSize="18" />
+                    <xamarin:CustomEntry Text="{Binding Profile.Name}"  HorizontalTextAlignment="Center" FontSize="18" />
 
-                <Button Clicked="Save_Clicked" Text="Save" BackgroundColor="{DynamicResource ItemColor}" />
-                <FlexLayout JustifyContent="Center">
-                    <Label Text="Orange" FontSize="25"></Label>
-                    <Switch Toggled="Switch_OnToggled"></Switch>
-                    <Label Text="Blue" FontSize="25"></Label>
+                    <Button Clicked="Save_Clicked" Text="Save" BackgroundColor="{DynamicResource ItemColor}" />
+                    <FlexLayout JustifyContent="Center">
+                        <Label Text="Orange" FontSize="25"></Label>
+                        <Switch x:Name="Toggle" Toggled="Switch_OnToggled" IsToggled="{Binding toggle}"></Switch>
+                        <Label Text="Blue" FontSize="25"></Label>
+                    </FlexLayout>
+                </StackLayout>
+            </ScrollView>
+
+            <ContentView x:Name="PopupPhoto" BackgroundColor="#99000000" Padding="10, 0" IsVisible="false" Opacity="0"  AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+                <FlexLayout Direction="Row" JustifyContent="Center" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="150" WidthRequest="300" Padding="10, 0" BackgroundColor="White">
+                    <StackLayout Padding="20, 0">
+                        <Image Source="GalleryIcon.png" WidthRequest="60" HeightRequest="60" Margin="10, 10"></Image>
+                        <Label Text="Gallery" FontSize="26" VerticalTextAlignment="Center" />
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="GalleryClicked" />
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
+                    <StackLayout Padding="20, 0">
+                        <Image Source="CameraIcon.png" WidthRequest="60" HeightRequest="60" Margin="10, 10"></Image>
+                        <Label Text="Camera" FontSize="26" VerticalTextAlignment="Center" />
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="CameraClicked" />
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
                 </FlexLayout>
-            </StackLayout>
-        </ScrollView>
+            </ContentView>
+
+        </AbsoluteLayout>
     </ContentPage.Content>
+
     
 </ContentPage>
