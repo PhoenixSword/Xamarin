@@ -47,31 +47,23 @@ namespace Server.Data.Repositories.Concrete
         {
             _ctx.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
 
-            if (_ctx.Profiles.Any(p => p.Name == profile.Name && p.Password == HashPassword(profile.Password)))
-                return _ctx.Profiles.Where(p => p.Name == profile.Name).FirstOrDefault();
-            else
-                return null;
+            return _ctx.Profiles.Any(p => p.Name == profile.Name && p.Password == HashPassword(profile.Password)) ? _ctx.Profiles.FirstOrDefault(p => p.Name == profile.Name) : null;
         }
 
-        public bool RegisterProfile(Profile profile)
+        public Profile RegisterProfile(Profile profile)
         {
             _ctx.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
 
-            if (!_ctx.Profiles.Any(p => p.Name == profile.Name))
-            {
-                profile.Id = Guid.NewGuid().ToString();
+            if (_ctx.Profiles.Any(p => p.Name == profile.Name)) return null;
 
-                profile.Password = HashPassword(profile.Password);
+            profile.Id = Guid.NewGuid().ToString();
 
-                _ctx.Add(profile);
-                _ctx.SaveChanges();
+            profile.Password = HashPassword(profile.Password);
 
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            _ctx.Add(profile);
+            _ctx.SaveChanges();
+
+            return profile;
         }
 
         public void DeleteDishes(string id)

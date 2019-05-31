@@ -35,7 +35,7 @@ namespace Server.Controllers
             return _repo.LoginProfile(profile);
         }
         [HttpPost]
-        public bool Register(Profile profile)
+        public Profile Register(Profile profile)
         {
             return _repo.RegisterProfile(profile);
         }

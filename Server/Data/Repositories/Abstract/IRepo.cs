@@ -11,7 +11,7 @@ namespace Server.Data.Repositories.Abstract
         Profile GetProfile();
         void UpdateProfile(Profile profile);
         Profile LoginProfile(Profile profile);
-        bool RegisterProfile(Profile profile);
+        Profile RegisterProfile(Profile profile);
 
     }
     
