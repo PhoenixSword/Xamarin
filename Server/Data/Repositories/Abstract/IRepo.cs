@@ -10,6 +10,8 @@ namespace Server.Data.Repositories.Abstract
         void UpdateDishes(Dish dish);
         Profile GetProfile();
         void UpdateProfile(Profile profile);
+        bool LoginProfile(Profile profile);
+        bool RegisterProfile(Profile profile);
 
     }
     
