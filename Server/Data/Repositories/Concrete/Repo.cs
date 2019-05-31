@@ -14,8 +14,7 @@ namespace Server.Data.Repositories.Concrete
     {
         private readonly ApplicationDbContext _ctx;
         private IEnumerable<Dish> Dishes => _ctx.Dishes.Include(d => d.Ingredients).ToList();
-        private Profile Profile => _ctx.Profiles.FirstOrDefault();
-
+        private IEnumerable<Profile> Profiles => _ctx.Profiles.ToList();
         public Repo(ApplicationDbContext applicationDbContext)
         {
             _ctx = applicationDbContext;
@@ -27,33 +26,22 @@ namespace Server.Data.Repositories.Concrete
             return list;
         }
 
-        public Profile GetProfile()
-        {
-            return Profile;
-        }
         public void UpdateProfile(Profile profile)
         {
-            _ctx.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-            if (Profile != null)
-            {
-                _ctx.Remove(Profile);
-                _ctx.SaveChanges();
-            }
-            _ctx.Add(profile);
+            var oldProfile = _ctx.Profiles.FirstOrDefault(p => p.Id == profile.Id);
+            if (oldProfile == null) return;
+            oldProfile.Name = profile.Name;
+            oldProfile.Image = profile.Image;
             _ctx.SaveChanges();
         }
 
         public Profile LoginProfile(Profile profile)
         {
-            _ctx.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-
             return _ctx.Profiles.Any(p => p.Name == profile.Name && p.Password == HashPassword(profile.Password)) ? _ctx.Profiles.FirstOrDefault(p => p.Name == profile.Name) : null;
         }
 
         public Profile RegisterProfile(Profile profile)
         {
-            _ctx.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-
             if (_ctx.Profiles.Any(p => p.Name == profile.Name)) return null;
 
             profile.Id = Guid.NewGuid().ToString();
@@ -92,7 +80,7 @@ namespace Server.Data.Repositories.Concrete
 
         }
 
-        private string HashPassword(string password)
+        private static string HashPassword(string password)
         {
             var data = Encoding.ASCII.GetBytes(password);
             var md5 = new MD5CryptoServiceProvider();

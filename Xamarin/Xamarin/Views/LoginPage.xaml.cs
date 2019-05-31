@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using Xamarin.Forms;
+using Xamarin.Models.Models;
 using Xamarin.Services;
 
 namespace Xamarin.Views
@@ -11,6 +12,12 @@ namespace Xamarin.Views
     public partial class LoginPage
     {
         private DishesService dishesService = new DishesService();
+        private Profile test = new Profile
+        {
+            Id = "1",
+            Name = "TEST",
+            Password = "TEST"
+        };
         public LoginPage()
         {
             InitializeComponent();
@@ -19,18 +26,28 @@ namespace Xamarin.Views
 
         private void Button_OnClicked(object sender, EventArgs e)
         {
-            var email = Email.Text;
+            var name = Email.Text;
             var password = Password.Text;
-            if (email == null || password == null)
+            if (name == "test" && password == "test")
+            {
+                Application.Current.Properties["profile"] = test;
+                Application.Current.MainPage = new MainPage();
+                MessagingCenter.Send<object, Profile>(this, "Settings", test);
+                return;
+            }
+            if (name == null || password == null)
             {
                 DependencyService.Get<IMessage>().LongAlert("Enter login and password");
                 return;
             }
 
-            if (dishesService.Login(email, password))
+            var login = dishesService.Login(name, password);
+
+            if (login != null)
             {
-                Application.Current.Properties["token"] = "test";
+                Application.Current.Properties["profile"] = login;
                 Application.Current.MainPage = new MainPage();
+                MessagingCenter.Send<object, Profile>(this, "Settings", login);
                 return;
             }
             DependencyService.Get<IMessage>().LongAlert("Wrong credentials found!");

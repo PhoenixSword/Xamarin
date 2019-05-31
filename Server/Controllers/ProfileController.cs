@@ -20,10 +20,6 @@ namespace Server.Controllers
         {
             _repo = repo;
         }
-        public Profile GetProfile()
-        {
-            return _repo.GetProfile();
-        }
         [HttpPost]
         public void UpdateProfile(Profile profile)
         {

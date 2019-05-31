@@ -24,7 +24,7 @@ namespace Xamarin.Views
         {
             if (id == (int)MenuItemType.LogOut)
             {
-                Application.Current.Properties["token"] = "";
+                Application.Current.Properties["profile"] = null;;
                 Application.Current.MainPage = new LoginPage();
                 return;
             }

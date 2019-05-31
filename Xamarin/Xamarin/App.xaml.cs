@@ -29,13 +29,13 @@ namespace Xamarin
             InitializeComponent();
             if (Current.Properties.TryGetValue("Style", out var result)) SetStyle(int.Parse(Current.Properties["Style"].ToString()));
            
-            if (!Current.Properties.TryGetValue("token", out var resultToken)) Current.Properties["token"] = "";
+            if (!Current.Properties.TryGetValue("profile", out var resultToken)) Current.Properties["profile"] = null;
 
             MessagingCenter.Subscribe<object, int>(this, "Style", (s, e) =>
             {
                 Device.BeginInvokeOnMainThread( () => { SetStyle(e); Current.Properties["Style"] = e; });
             });
-            if (!Current.Properties["token"].ToString().Equals(""))
+            if (Current.Properties["profile"] != null)
             {
                 MainPage = new MainPage();
             }

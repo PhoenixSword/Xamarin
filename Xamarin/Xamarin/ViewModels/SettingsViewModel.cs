@@ -14,25 +14,23 @@ namespace Xamarin.ViewModels
         public SettingsViewModel()
         {
             Title = "Settings";
-            if (Db.Profiles.FirstOrDefault() == null)
+            var profile = (Profile)Application.Current.Properties["profile"];
+            if (profile != null)
             {
-                Profile profile = null;
-                Task.Run(async() => await _dishesService.GetProfile()).ContinueWith(task => profile = task.Result);
-                if (profile != null)
+                Profile = new Profile
                 {
-                    Db.Profiles.Add(profile);
-                    Db.SaveChanges();
-                }
+                    Id = profile.Id,
+                    Name = profile.Name,
+                    Image = profile.Image,
+                    ImageSource = profile.Image != null
+                        ? ImageSource.FromStream(() => new MemoryStream(profile.Image))
+                        : ImageSource.FromFile("Profile.jpg")
+                };
             }
-            
-            Profile = Db.Profiles.Select(p => new Profile
+            else
             {
-                Id = p.Id,
-                Name = p.Name,
-                Image = p.Image,
-                ImageSource = p.Image != null ? ImageSource.FromStream(() => new MemoryStream(p.Image)) : ImageSource.FromFile("Profile.jpg")
-            }).FirstOrDefault() ?? new Profile {Name = "Unknown", ImageSource = ImageSource.FromFile("Profile.jpg") };
-
+                Profile = profile = new Profile { Name = "Unknown", ImageSource = ImageSource.FromFile("Profile.jpg") };
+            }
             MessagingCenter.Send<object, Profile>(this, "Settings", Profile);
         }
 
@@ -42,7 +40,7 @@ namespace Xamarin.ViewModels
             Profile.Image = GetImageStreamAsBytes(stream);
         }
 
-        public byte[] GetImageStreamAsBytes(Stream input)
+        private byte[] GetImageStreamAsBytes(Stream input)
         {
             var buffer = new byte[16 * 1024];
             using (MemoryStream ms = new MemoryStream())
@@ -59,17 +57,17 @@ namespace Xamarin.ViewModels
         public void Save()
         {
             if (string.IsNullOrEmpty(Profile.Name)) return;
-            if (string.IsNullOrEmpty(Profile.Id))
-            {
-                Db.Profiles.Add(Profile);
-            }
-            else
-            {
-                var profile = Db.Profiles.Single();
-                profile.Name = Profile.Name;
-                profile.Image = Profile.Image;
-            }
-            Db.SaveChanges();
+            //if (string.IsNullOrEmpty(Profile.Id))
+            //{
+            //    Db.Profiles.Add(Profile);
+            //}
+            //else
+            //{
+            //    var profile = Db.Profiles.Single();
+            //    profile.Name = Profile.Name;
+            //    profile.Image = Profile.Image;
+            //}
+            //Db.SaveChanges();
 
             MessagingCenter.Send<object, Profile>(this, "Settings", Profile);
 

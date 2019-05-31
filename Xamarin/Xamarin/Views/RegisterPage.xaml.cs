@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using Xamarin.Forms;
+using Xamarin.Models.Models;
 using Xamarin.Services;
 
 namespace Xamarin.Views
@@ -19,11 +20,11 @@ namespace Xamarin.Views
 
         private void Button_OnClicked(object sender, EventArgs e)
         {
-            var email = Email.Text;
+            var name = Email.Text;
             var password = Password.Text;
             var passwordConfirm = PasswordConfirm.Text;
 
-            if (email == null || password == null)
+            if (name == null || password == null)
             {
                 DependencyService.Get<IMessage>().LongAlert("Enter login and password");
                 return;
@@ -35,10 +36,12 @@ namespace Xamarin.Views
                 return;
             }
 
-            if (dishesService.Register(email, password))
+            var register = dishesService.Register(name, password);
+            if (register != null)
             {
-                Application.Current.Properties["token"] = "test";
+                Application.Current.Properties["profile"] = register;
                 Application.Current.MainPage = new MainPage();
+                MessagingCenter.Send<object, Profile>(this, "Settings", register);
                 return;
             }
             DependencyService.Get<IMessage>().LongAlert("Wrong credentials found!");
