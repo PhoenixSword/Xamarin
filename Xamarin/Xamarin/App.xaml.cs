@@ -8,16 +8,21 @@ namespace Xamarin
     {
         public const string Dbfilename = "app.db";
 
-        private readonly Dictionary<string, string> _style1 = new Dictionary<string, string>
+        private readonly Dictionary<string, string> OrangeStyle = new Dictionary<string, string>
         {
             {"Background", "Cornsilk"},
             {"ItemColor", "Orange"}
         };
 
-        private readonly Dictionary<string, string> _style2 = new Dictionary<string, string>
+        private readonly Dictionary<string, string> BlueStyle = new Dictionary<string, string>
         {
             {"Background", "LightSkyBlue"},
             {"ItemColor", "DodgerBlue"}
+        };
+        private readonly Dictionary<string, string> PinkStyle = new Dictionary<string, string>
+        {
+            {"Background", "LightPink"},
+            {"ItemColor", "DeepPink"}
         };
         public App()
         {
@@ -45,12 +50,16 @@ namespace Xamarin
             switch (number)
             {
                 case 0:
-                    Resources["Background"] = _style1["Background"];
-                    Resources["ItemColor"] = _style1["ItemColor"];
+                    Resources["Background"] = OrangeStyle["Background"];
+                    Resources["ItemColor"] = OrangeStyle["ItemColor"];
                     break;
                 case 1:
-                    Resources["Background"] = _style2["Background"];
-                    Resources["ItemColor"] = _style2["ItemColor"];
+                    Resources["Background"] = BlueStyle["Background"];
+                    Resources["ItemColor"] = BlueStyle["ItemColor"];
+                    break;
+                case 2:
+                    Resources["Background"] = PinkStyle["Background"];
+                    Resources["ItemColor"] = PinkStyle["ItemColor"];
                     break;
             }
         }

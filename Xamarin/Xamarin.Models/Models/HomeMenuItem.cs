@@ -5,7 +5,7 @@ namespace Xamarin.Models.Models
     {
         MyDishes,
         Settings,
-        Exit
+        LogOut
     }
     public class HomeMenuItem
     {
