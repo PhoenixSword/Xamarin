@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Server.Data.Repositories.Abstract;
 using Xamarin.Models.Models;
@@ -40,6 +43,42 @@ namespace Server.Data.Repositories.Concrete
             _ctx.SaveChanges();
         }
 
+        public bool LoginProfile(Profile profile)
+        {
+            _ctx.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+
+
+            if (_ctx.Profiles.Any(p => p.Name == profile.Name && p.Password == HashPassword(profile.Password)))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool RegisterProfile(Profile profile)
+        {
+            _ctx.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+
+            if (!_ctx.Profiles.Any(p => p.Name == profile.Name))
+            {
+                profile.Id = Guid.NewGuid().ToString();
+
+                profile.Password = HashPassword(profile.Password);
+
+                _ctx.Add(profile);
+                _ctx.SaveChanges();
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public void DeleteDishes(string id)
         {
             var dish = Dishes.FirstOrDefault(d=>d.Id == id);
@@ -66,5 +105,12 @@ namespace Server.Data.Repositories.Concrete
 
         }
 
+        private string HashPassword(string password)
+        {
+            var data = Encoding.ASCII.GetBytes(password);
+            var md5 = new MD5CryptoServiceProvider();
+            var md5data = md5.ComputeHash(data);
+            return BitConverter.ToString(md5data).Replace("-", "");
+        }
     }
 }

@@ -7,6 +7,7 @@ namespace Xamarin.Models.Models
     {
         public string Id { get; set; }
         public string Name { get; set; }
+        public string Password { get; set; }
         [NotMapped]
         public ImageSource ImageSource { get; set; }
         public byte[] Image { get; set; }

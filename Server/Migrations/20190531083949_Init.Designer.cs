@@ -10,8 +10,8 @@ using Server.Data;
 namespace Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190529121812_Models")]
-    partial class Models
+    [Migration("20190531083949_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -67,6 +67,8 @@ namespace Server.Migrations
                     b.Property<byte[]>("Image");
 
                     b.Property<string>("Name");
+
+                    b.Property<string>("Password");
 
                     b.HasKey("Id");
 

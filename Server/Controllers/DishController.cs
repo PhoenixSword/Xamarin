@@ -24,19 +24,5 @@ namespace Server.Controllers
         {
             _repo.DeleteDishes(id);
         }
-        [HttpPost]
-        public void UpdateDishes(Dish dish)
-        {
-            _repo.UpdateDishes(dish);
-        }
-        public Profile GetProfile()
-        {
-            return _repo.GetProfile();
-        }
-        [HttpPost]
-        public void UpdateProfile(Profile profile)
-        {
-            _repo.UpdateProfile(profile);
-        }
     }
 }

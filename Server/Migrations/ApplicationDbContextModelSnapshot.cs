@@ -66,6 +66,8 @@ namespace Server.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<string>("Password");
+
                     b.HasKey("Id");
 
                     b.ToTable("Profiles");
