@@ -22,18 +22,24 @@ namespace Xamarin.Views
 
         public async Task NavigateFromMenu(int id)
         {
-            if (!MenuPages.ContainsKey(id))
+            if (id == (int)MenuItemType.LogOut)
             {
-                switch (id)
-                {
-                    case (int) MenuItemType.MyDishes:
-                        MenuPages.Add(id, new NavigationPage(new DishesPage()));
-                        break;
-                    case (int) MenuItemType.Settings:
-                        MenuPages.Add(id, new NavigationPage(new SettingsPage()));
-                        break;
-                }
+                Application.Current.Properties["token"] = "";
+                Application.Current.MainPage = new LoginPage();
+                return;
             }
+            //if (!MenuPages.ContainsKey(id))
+            //{
+            //    switch (id)
+            //    {
+            //        case (int) MenuItemType.MyDishes:
+            //            MenuPages.Add(id, new NavigationPage(new DishesPage()));
+            //            break;
+            //        case (int)MenuItemType.Settings:
+            //            MenuPages.Add(id, new NavigationPage(new SettingsPage()));
+            //            break;
+            //    }
+            //}
 
             var newPage = MenuPages[id];
 

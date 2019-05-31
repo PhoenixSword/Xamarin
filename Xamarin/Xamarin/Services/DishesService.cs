@@ -90,5 +90,36 @@ namespace Xamarin.Services
                 // ignored
             }
         }
+
+        public bool Login(string email, string password)
+        {
+            try
+            {
+                _client.Timeout = TimeSpan.FromMilliseconds(5000);
+                var json = JsonConvert.SerializeObject(new { email, password });
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                return Convert.ToBoolean(_client.PostAsync(path + "login", content).Result.Content.ToString());
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public bool Register(string email, string password)
+        {
+            try
+            {
+                _client.Timeout = TimeSpan.FromMilliseconds(5000);
+                var json = JsonConvert.SerializeObject(new { email, password });
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                return Convert.ToBoolean(_client.PostAsync(path + "login", content).Result.Content.ToString());
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

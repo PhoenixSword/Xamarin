@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
-using System.Threading.Tasks;
+using System.Linq;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using Xamarin.Extension;
 using Xamarin.Forms;
+using Xamarin.Models.Models;
 using Xamarin.ViewModels;
 
 namespace Xamarin.Views
@@ -16,16 +18,24 @@ namespace Xamarin.Views
     {
         private readonly SettingsViewModel _viewModel;
         private MediaFile SelectedImageFile { get; set; }
+        private readonly List<string> _styleItems = new List<string>
+        {
+            "Orange Theme", "Blue Theme", "Pink Theme"
+        };
+        //private List<AvatarItem> _avatarItems = new List<AvatarItem>
+        //{
+        //    new AvatarItem {Id = AvatarType.Gallery, Image = "ImageIcon.png", Title = "Gallery"},
+        //    new AvatarItem {Id = AvatarType.Camera, Image = "CameraIcon.png", Title = "Camera"}
 
+        //};
         public SettingsPage()
         {
             InitializeComponent();
             BindingContext = _viewModel = new SettingsViewModel();
             SelectedImage.Source = _viewModel.Profile.ImageSource;
-            if (Application.Current.Properties.TryGetValue("Style", out var result))
-            {
-                Toggle.IsToggled = Convert.ToBoolean((int)Application.Current.Properties["Style"]);
-            }
+            //AvatarPicker.ItemsSource = _avatarItems;
+            StylePicker.ItemsSource = _styleItems;
+            StylePicker.SelectedIndex = Application.Current.Properties.TryGetValue("Style", out var result) ? int.Parse(Application.Current.Properties["Style"].ToString()) : 0;
         }
 
         private void Save_Clicked(object sender, EventArgs e)
@@ -36,10 +46,11 @@ namespace Xamarin.Views
         private void Image_Clicked(object sender, EventArgs e)
         {
             PopupPhoto.FadeIn();
+            //AvatarPicker.Focus();
         }
         private async void GalleryClicked(object sender, EventArgs eventArgs)
         {
-            PopupPhoto.FadeOut();
+            await PopupPhoto.FadeOut();
             await CrossMedia.Current.Initialize();
             if (CrossMedia.Current.IsPickPhotoSupported)
             {
@@ -57,7 +68,7 @@ namespace Xamarin.Views
         }
         private async void CameraClicked(object sender, EventArgs eventArgs)
         {
-            PopupPhoto.FadeOut();
+            await PopupPhoto.FadeOut();
             await CrossMedia.Current.Initialize();
             if (CrossMedia.Current.IsCameraAvailable && CrossMedia.Current.IsTakePhotoSupported)
             {
@@ -75,9 +86,10 @@ namespace Xamarin.Views
             SelectedImage.Source = ImageSource.FromStream(() => SelectedImageFile.GetStream());
 
         }
-        private void Switch_OnToggled(object sender, ToggledEventArgs e)
+        private void SelectStyle(object sender, EventArgs e)
         {
-            MessagingCenter.Send<object, int>(this, "Style", e.Value ? 1 : 0);
+            var index = ((Picker)sender).SelectedIndex;
+            MessagingCenter.Send<object, int>(this, "Style", index);
         }
 
         protected override bool OnBackButtonPressed()
@@ -85,5 +97,6 @@ namespace Xamarin.Views
             PopupPhoto.FadeOut();
             return true;
         }
+
     }
 }

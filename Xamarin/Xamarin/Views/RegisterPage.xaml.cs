@@ -8,10 +8,10 @@ namespace Xamarin.Views
     // Learn more about making custom code visible in the Xamarin.Forms previewer
     // by visiting https://aka.ms/xamarinforms-previewer
     [DesignTimeVisible(true)]
-    public partial class LoginPage
+    public partial class RegisterPage
     {
         private DishesService dishesService = new DishesService();
-        public LoginPage()
+        public RegisterPage()
         {
             InitializeComponent();
            
@@ -21,13 +21,21 @@ namespace Xamarin.Views
         {
             var email = Email.Text;
             var password = Password.Text;
+            var passwordConfirm = PasswordConfirm.Text;
+
             if (email == null || password == null)
             {
                 DependencyService.Get<IMessage>().LongAlert("Enter login and password");
                 return;
             }
 
-            if (dishesService.Login(email, password))
+            if (password != passwordConfirm)
+            {
+                DependencyService.Get<IMessage>().LongAlert("Passwords not match");
+                return;
+            }
+
+            if (dishesService.Register(email, password))
             {
                 Application.Current.Properties["token"] = "test";
                 Application.Current.MainPage = new MainPage();
@@ -37,9 +45,9 @@ namespace Xamarin.Views
 
         }
 
-        private void Register_OnClicked(object sender, EventArgs e)
+        private void Login_OnClicked(object sender, EventArgs e)
         {
-            Application.Current.MainPage = new RegisterPage();;
+            Application.Current.MainPage = new LoginPage(); ;
         }
     }
 }

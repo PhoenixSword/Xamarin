@@ -1,13 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Xamarin.Views.LoginPage">
+             x:Class="Xamarin.Views.RegisterPage">
     <ContentPage.Content>
         <StackLayout VerticalOptions="FillAndExpand" BackgroundColor="{DynamicResource Background}" Padding="30, 150">
             <Entry x:Name="Email" Placeholder="Email"></Entry>
             <Entry x:Name="Password" IsPassword="True" Placeholder="Password"></Entry>
-            <Button Text="Login" Clicked="Button_OnClicked" BackgroundColor="{DynamicResource ItemColor}"></Button>
-            <Button Text="Register" Clicked="Register_OnClicked" BackgroundColor="{DynamicResource ItemColor}"></Button>
+            <Entry x:Name="PasswordConfirm" IsPassword="True" Placeholder=" Confirm password"></Entry>
+            <Button Text="Register" Clicked="Button_OnClicked" BackgroundColor="{DynamicResource ItemColor}"></Button>
+            <Button Text="Login" Clicked="Login_OnClicked" BackgroundColor="{DynamicResource ItemColor}"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -21,7 +21,8 @@ namespace Xamarin.Views
             var menuItems = new List<HomeMenuItem>
             {
                 new HomeMenuItem {Id = MenuItemType.MyDishes, Title="My Dishes" },
-                new HomeMenuItem {Id = MenuItemType.Settings, Title="Settings" }
+                new HomeMenuItem {Id = MenuItemType.Settings, Title="Settings" },
+                new HomeMenuItem {Id = MenuItemType.LogOut, Title = "Logout" }
             };
 
             ListViewMenu.ItemsSource = menuItems;

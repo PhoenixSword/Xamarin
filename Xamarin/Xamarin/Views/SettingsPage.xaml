@@ -18,10 +18,8 @@
                     <xamarin:CustomEntry Text="{Binding Profile.Name}"  HorizontalTextAlignment="Center" FontSize="18" />
 
                     <Button Clicked="Save_Clicked" Text="Save" BackgroundColor="{DynamicResource ItemColor}" />
-                    <FlexLayout JustifyContent="Center">
-                        <Label Text="Orange" FontSize="25"></Label>
-                        <Switch x:Name="Toggle" Toggled="Switch_OnToggled" IsToggled="{Binding toggle}"></Switch>
-                        <Label Text="Blue" FontSize="25"></Label>
+                    <FlexLayout JustifyContent="Center" AlignContent="Center">
+                        <xamarin:CustomPicker x:Name="StylePicker" HorizontalOptions="Center" FontSize="25" SelectedIndexChanged="SelectStyle" WidthRequest="200"></xamarin:CustomPicker>
                     </FlexLayout>
                 </StackLayout>
             </ScrollView>
