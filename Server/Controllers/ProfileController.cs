@@ -30,7 +30,7 @@ namespace Server.Controllers
             _repo.UpdateProfile(profile);
         }
         [HttpPost]
-        public bool Login(Profile profile)
+        public Profile Login(Profile profile)
         {
             return _repo.LoginProfile(profile);
         }

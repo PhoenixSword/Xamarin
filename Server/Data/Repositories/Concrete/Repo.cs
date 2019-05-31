@@ -43,19 +43,14 @@ namespace Server.Data.Repositories.Concrete
             _ctx.SaveChanges();
         }
 
-        public bool LoginProfile(Profile profile)
+        public Profile LoginProfile(Profile profile)
         {
             _ctx.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
 
-
             if (_ctx.Profiles.Any(p => p.Name == profile.Name && p.Password == HashPassword(profile.Password)))
-            {
-                return true;
-            }
+                return _ctx.Profiles.Where(p => p.Name == profile.Name).FirstOrDefault();
             else
-            {
-                return false;
-            }
+                return null;
         }
 
         public bool RegisterProfile(Profile profile)
