@@ -43,7 +43,7 @@ namespace Xamarin.Views
 
         private void Image_Clicked(object sender, EventArgs e)
         {
-            PopupPhoto.FadeIn();
+            _ = PopupPhoto.FadeIn();
             //AvatarPicker.Focus();
         }
         private async void GalleryClicked(object sender, EventArgs eventArgs)
@@ -92,7 +92,7 @@ namespace Xamarin.Views
 
         protected override bool OnBackButtonPressed()
         {
-            PopupPhoto.FadeOut();
+            _ = PopupPhoto.FadeOut();
             return true;
         }
 
