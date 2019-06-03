@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using Java.Lang;
+using System.Threading;
 using Xamarin.Forms;
 using Xamarin.Models.Models;
 
@@ -50,7 +50,7 @@ namespace Xamarin.Views
         {
             var result = await DisplayAlert("Exit? ", "Do you really want to exit the application?", "Yes", "No");
             if (!result) return;
-            JavaSystem.Exit(0);
+            Thread.CurrentThread.Abort();
         }
 
     }
