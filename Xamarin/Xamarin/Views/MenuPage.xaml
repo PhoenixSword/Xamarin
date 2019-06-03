@@ -22,7 +22,7 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <!--<Button Text="Exit" BackgroundColor="{DynamicResource ItemColor}" Clicked="Button_OnClicked" FontSize="24"/>-->
+        <Button Text="Exit" BackgroundColor="{DynamicResource ItemColor}" Clicked="Button_OnClicked" FontSize="24"/>
     </StackLayout>
 
 </ContentPage>

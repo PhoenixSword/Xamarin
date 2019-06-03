@@ -24,7 +24,9 @@ namespace Xamarin.Views
         {
             if (id == (int)MenuItemType.LogOut)
             {
-                Application.Current.Properties["profile"] = null;;
+                Application.Current.Properties["id"] = null;
+                Application.Current.Properties["name"] = null;
+                Application.Current.Properties["image"] = null;
                 Application.Current.MainPage = new LoginPage();
                 return;
             }

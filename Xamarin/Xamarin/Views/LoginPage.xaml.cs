@@ -24,13 +24,16 @@ namespace Xamarin.Views
            
         }
 
-        private void Button_OnClicked(object sender, EventArgs e)
+        private async void Button_OnClicked(object sender, EventArgs e)
         {
             var name = Email.Text;
             var password = Password.Text;
             if (name == "test" && password == "test")
             {
-                Application.Current.Properties["profile"] = test;
+                Application.Current.Properties["id"] = test.Id;
+                Application.Current.Properties["name"] = test.Name;
+                Application.Current.Properties["image"] = test.Image;
+                await Application.Current.SavePropertiesAsync();
                 Application.Current.MainPage = new MainPage();
                 MessagingCenter.Send<object, Profile>(this, "Settings", test);
                 return;
@@ -45,18 +48,22 @@ namespace Xamarin.Views
 
             if (login != null)
             {
-                Application.Current.Properties["profile"] = login;
+                Application.Current.Properties["id"] = login.Id;
+                Application.Current.Properties["name"] = login.Name;
+                Application.Current.Properties["image"] = login.Image;
+                await Application.Current.SavePropertiesAsync();
                 Application.Current.MainPage = new MainPage();
                 MessagingCenter.Send<object, Profile>(this, "Settings", login);
                 return;
             }
+
             DependencyService.Get<IMessage>().LongAlert("Wrong credentials found!");
 
         }
 
         private void Register_OnClicked(object sender, EventArgs e)
         {
-            Application.Current.MainPage = new RegisterPage();;
+            Application.Current.MainPage = new RegisterPage();
         }
     }
 }

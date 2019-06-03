@@ -49,10 +49,8 @@ namespace Xamarin.Views
         private async void Button_OnClicked(object sender, EventArgs e)
         {
             var result = await DisplayAlert("Exit? ", "Do you really want to exit the application?", "Yes", "No");
-            if (result)
-            {
-                JavaSystem.Exit(0);
-            }
+            if (!result) return;
+            JavaSystem.Exit(0);
         }
 
     }

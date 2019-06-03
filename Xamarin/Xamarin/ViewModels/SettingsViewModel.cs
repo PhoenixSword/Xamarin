@@ -1,6 +1,4 @@
 ﻿using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Models.Models;
 using Xamarin.Services;
@@ -14,8 +12,13 @@ namespace Xamarin.ViewModels
         public SettingsViewModel()
         {
             Title = "Settings";
-            var profile = (Profile)Application.Current.Properties["profile"];
-            if (profile != null)
+            var profile = new Profile
+            {
+                Id = Application.Current.Properties["id"].ToString(),
+                Name = Application.Current.Properties["name"].ToString(),
+                Image = (byte[])Application.Current.Properties["image"]
+            };
+            if (profile.Id != null)
             {
                 Profile = new Profile
                 {
@@ -29,7 +32,7 @@ namespace Xamarin.ViewModels
             }
             else
             {
-                Profile = profile = new Profile { Name = "Unknown", ImageSource = ImageSource.FromFile("Profile.jpg") };
+                Profile = new Profile { Name = "Unknown", ImageSource = ImageSource.FromFile("Profile.jpg") };
             }
             MessagingCenter.Send<object, Profile>(this, "Settings", Profile);
         }

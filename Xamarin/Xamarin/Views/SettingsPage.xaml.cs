@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using Xamarin.Extension;
 using Xamarin.Forms;
-using Xamarin.Models.Models;
 using Xamarin.ViewModels;
 
 namespace Xamarin.Views
@@ -35,7 +33,7 @@ namespace Xamarin.Views
             SelectedImage.Source = _viewModel.Profile.ImageSource;
             //AvatarPicker.ItemsSource = _avatarItems;
             StylePicker.ItemsSource = _styleItems;
-            StylePicker.SelectedIndex = Application.Current.Properties.TryGetValue("Style", out var result) ? int.Parse(Application.Current.Properties["Style"].ToString()) : 0;
+            StylePicker.SelectedIndex = Application.Current.Properties.TryGetValue("Style", out _) ? int.Parse(Application.Current.Properties["Style"].ToString()) : 0;
         }
 
         private void Save_Clicked(object sender, EventArgs e)

@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Views;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 
 namespace Xamarin
 {
@@ -8,18 +11,18 @@ namespace Xamarin
     {
         public const string Dbfilename = "app.db";
 
-        private readonly Dictionary<string, string> OrangeStyle = new Dictionary<string, string>
+        private readonly Dictionary<string, string> _orangeStyle = new Dictionary<string, string>
         {
             {"Background", "Cornsilk"},
             {"ItemColor", "Orange"}
         };
 
-        private readonly Dictionary<string, string> BlueStyle = new Dictionary<string, string>
+        private readonly Dictionary<string, string> _blueStyle = new Dictionary<string, string>
         {
             {"Background", "LightSkyBlue"},
             {"ItemColor", "DodgerBlue"}
         };
-        private readonly Dictionary<string, string> PinkStyle = new Dictionary<string, string>
+        private readonly Dictionary<string, string> _pinkStyle = new Dictionary<string, string>
         {
             {"Background", "LightPink"},
             {"ItemColor", "DeepPink"}
@@ -27,15 +30,14 @@ namespace Xamarin
         public App()
         {
             InitializeComponent();
-            if (Current.Properties.TryGetValue("Style", out var result)) SetStyle(int.Parse(Current.Properties["Style"].ToString()));
-           
-            if (!Current.Properties.TryGetValue("profile", out var resultToken)) Current.Properties["profile"] = null;
+            if (Current.Properties.TryGetValue("Style", out _)) SetStyle(int.Parse(Current.Properties["Style"].ToString()));
 
-            MessagingCenter.Subscribe<object, int>(this, "Style", (s, e) =>
-            {
-                Device.BeginInvokeOnMainThread( () => { SetStyle(e); Current.Properties["Style"] = e; });
-            });
-            if (Current.Properties["profile"] != null)
+            if (!Current.Properties.TryGetValue("id", out _)) Current.Properties["id"] = null;
+            if (!Current.Properties.TryGetValue("name", out _)) Current.Properties["name"] = null;
+            if (!Current.Properties.TryGetValue("image", out _)) Current.Properties["image"] = null;
+
+            MainPage = new LoginPage();
+            if (Current.Properties["id"] != null)
             {
                 MainPage = new MainPage();
             }
@@ -43,6 +45,15 @@ namespace Xamarin
             {
                 MainPage = new LoginPage();
             }
+            MessagingCenter.Subscribe<object, int>(this, "Style", (s, e) =>
+            {
+                Forms.Device.BeginInvokeOnMainThread(async () => {
+                    SetStyle(e);
+                    Current.Properties["Style"] = e;
+                    await Current.SavePropertiesAsync();
+                });
+
+            });
         }
 
         private void SetStyle(int number)
@@ -50,22 +61,22 @@ namespace Xamarin
             switch (number)
             {
                 case 0:
-                    Resources["Background"] = OrangeStyle["Background"];
-                    Resources["ItemColor"] = OrangeStyle["ItemColor"];
+                    Resources["Background"] = _orangeStyle["Background"];
+                    Resources["ItemColor"] = _orangeStyle["ItemColor"];
                     break;
                 case 1:
-                    Resources["Background"] = BlueStyle["Background"];
-                    Resources["ItemColor"] = BlueStyle["ItemColor"];
+                    Resources["Background"] = _blueStyle["Background"];
+                    Resources["ItemColor"] = _blueStyle["ItemColor"];
                     break;
                 case 2:
-                    Resources["Background"] = PinkStyle["Background"];
-                    Resources["ItemColor"] = PinkStyle["ItemColor"];
+                    Resources["Background"] = _pinkStyle["Background"];
+                    Resources["ItemColor"] = _pinkStyle["ItemColor"];
                     break;
             }
         }
         protected override void OnStart()
         {
-            // Handle when your app starts
+            AppCenter.Start("android=12f20db8-63a7-4ffb-93f4-f270dd16c130;",  typeof(Analytics), typeof(Crashes));
         }
 
         protected override void OnSleep()

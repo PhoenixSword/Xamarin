@@ -8,7 +8,6 @@ using Newtonsoft.Json;
 using Xamarin.Models.Models;
 using Xamarin.Models.Models.Mappings;
 
-using Xamarin.Forms;
 namespace Xamarin.Services
 {
     public class DishesService   
@@ -91,12 +90,12 @@ namespace Xamarin.Services
             }
         }
 
-        public Profile Login(string name, string password)
+        public Profile Login(string email, string password)
         {
             try
             {
                 _client.Timeout = TimeSpan.FromMilliseconds(5000);
-                var json = JsonConvert.SerializeObject(new { name, password });
+                var json = JsonConvert.SerializeObject(new { email, password });
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 var httpResponseMessage = _client.PostAsync(path + "profile/login", content).Result;
@@ -108,12 +107,12 @@ namespace Xamarin.Services
                 return null;
             }
         }
-        public Profile Register(string name, string password)
+        public Profile Register(string email, string password)
         {
             try
             {
                 _client.Timeout = TimeSpan.FromMilliseconds(5000);
-                var json = JsonConvert.SerializeObject(new { name, password });
+                var json = JsonConvert.SerializeObject(new { email, password });
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 var httpResponseMessage = _client.PostAsync(path + "profile/register", content).Result;

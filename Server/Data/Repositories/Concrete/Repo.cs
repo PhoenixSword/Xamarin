@@ -14,7 +14,7 @@ namespace Server.Data.Repositories.Concrete
     {
         private readonly ApplicationDbContext _ctx;
         private IEnumerable<Dish> Dishes => _ctx.Dishes.Include(d => d.Ingredients).ToList();
-        private IEnumerable<Profile> Profiles => _ctx.Profiles.ToList();
+        //private IEnumerable<Profile> Profiles => _ctx.Profiles.ToList();
         public Repo(ApplicationDbContext applicationDbContext)
         {
             _ctx = applicationDbContext;
@@ -37,12 +37,12 @@ namespace Server.Data.Repositories.Concrete
 
         public Profile LoginProfile(Profile profile)
         {
-            return _ctx.Profiles.Any(p => p.Name == profile.Name && p.Password == HashPassword(profile.Password)) ? _ctx.Profiles.FirstOrDefault(p => p.Name == profile.Name) : null;
+            return _ctx.Profiles.Any(p => p.Email == profile.Email && p.Password == HashPassword(profile.Password)) ? _ctx.Profiles.FirstOrDefault(p => p.Email == profile.Email) : null;
         }
 
         public Profile RegisterProfile(Profile profile)
         {
-            if (_ctx.Profiles.Any(p => p.Name == profile.Name)) return null;
+            if (_ctx.Profiles.Any(p => p.Email == profile.Email)) return null;
 
             profile.Id = Guid.NewGuid().ToString();
 
