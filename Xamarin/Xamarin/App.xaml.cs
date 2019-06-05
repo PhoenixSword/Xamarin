@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Views;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
+using Xamarin.ViewModels.Base;
 
 namespace Xamarin
 {
@@ -17,7 +17,6 @@ namespace Xamarin
             {"Background", "Cornsilk"},
             {"ItemColor", "Orange"}
         };
-
         private readonly Dictionary<string, string> _blueStyle = new Dictionary<string, string>
         {
             {"Background", "LightSkyBlue"},
@@ -32,7 +31,6 @@ namespace Xamarin
         {
             InitializeComponent();
             if (Current.Properties.TryGetValue("Style", out _)) SetStyle(int.Parse(Current.Properties["Style"].ToString()));
-
             if (!Current.Properties.TryGetValue("id", out _)) Current.Properties["id"] = null;
             if (!Current.Properties.TryGetValue("name", out _)) Current.Properties["name"] = null;
             if (!Current.Properties.TryGetValue("image", out _)) Current.Properties["image"] = null;
@@ -46,7 +44,7 @@ namespace Xamarin
             {
                 MainPage = new LoginPage();
             }
-            MessagingCenter.Subscribe<object, int>(this, "Style", (s, e) =>
+            MessagingCenter.Subscribe<object, int>(this, MessageKeys.Style, (s, e) =>
             {
                 Forms.Device.BeginInvokeOnMainThread(async () => {
                     SetStyle(e);

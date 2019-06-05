@@ -4,11 +4,11 @@
              x:Class="Xamarin.Views.RegisterPage">
     <ContentPage.Content>
         <StackLayout VerticalOptions="FillAndExpand" BackgroundColor="{DynamicResource Background}" Padding="30, 150">
-            <Entry x:Name="Email" Placeholder="Email"></Entry>
-            <Entry x:Name="Password" IsPassword="True" Placeholder="Password"></Entry>
-            <Entry x:Name="PasswordConfirm" IsPassword="True" Placeholder=" Confirm password"></Entry>
-            <Button Text="Register" Clicked="Button_OnClicked" BackgroundColor="{DynamicResource ItemColor}"></Button>
-            <Button Text="Login" Clicked="Login_OnClicked" BackgroundColor="{DynamicResource ItemColor}"></Button>
+            <Entry Text="{Binding Email}" Placeholder="Email"></Entry>
+            <Entry Text="{Binding Password}" IsPassword="True" Placeholder="Password"></Entry>
+            <Entry Text="{Binding PasswordConfirm}" IsPassword="True" Placeholder=" Confirm password"></Entry>
+            <Button Text="Register" Command="{Binding RegisterCommand}" BackgroundColor="{DynamicResource ItemColor}"></Button>
+            <Button Text="Login" Command="{Binding LoginPageCommand}" BackgroundColor="{DynamicResource ItemColor}"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

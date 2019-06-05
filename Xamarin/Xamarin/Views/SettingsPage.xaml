@@ -9,17 +9,23 @@
         <AbsoluteLayout BackgroundColor="{DynamicResource Background}">
             <ScrollView>
                 <StackLayout Spacing="20" Padding="15">
-                    <Image x:Name="SelectedImage" Source="{Binding selectedImageFile}" WidthRequest="200" HeightRequest="300">
+                    <Image Source="{Binding ImageSource}" WidthRequest="200" HeightRequest="300">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer Tapped="Image_Clicked" />
                         </Image.GestureRecognizers>
                     </Image>
-
-                    <xamarin:CustomEntry Text="{Binding Profile.Name}"  HorizontalTextAlignment="Center" FontSize="18" />
-
-                    <Button Clicked="Save_Clicked" Text="Save" BackgroundColor="{DynamicResource ItemColor}" />
+                    <xamarin:CustomEntry Text="{Binding Name}"  HorizontalTextAlignment="Center" FontSize="18" />
+                    <Button Command="{Binding SaveCommand}" Text="Save" BackgroundColor="{DynamicResource ItemColor}"/>
                     <FlexLayout JustifyContent="Center" AlignContent="Center">
-                        <xamarin:CustomPicker x:Name="StylePicker" HorizontalOptions="Center" FontSize="25" SelectedIndexChanged="SelectStyle" WidthRequest="200"></xamarin:CustomPicker>
+                        <xamarin:CustomPicker SelectedIndex="{Binding SelectedIndexPicker}" SelectedIndexChanged="SelectPicker" HorizontalOptions="Center" FontSize="25"  WidthRequest="200" >
+                            <Picker.ItemsSource>
+                                <x:Array Type="{x:Type x:String}">
+                                    <x:String>Orange Theme</x:String>
+                                    <x:String>Blue Theme</x:String>
+                                    <x:String>Pink Theme</x:String>
+                                </x:Array>
+                            </Picker.ItemsSource>
+                        </xamarin:CustomPicker>
                     </FlexLayout>
                 </StackLayout>
             </ScrollView>

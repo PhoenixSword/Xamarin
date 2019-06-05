@@ -45,8 +45,8 @@ namespace Server.Data.Repositories.Concrete
             if (_ctx.Profiles.Any(p => p.Email == profile.Email)) return null;
 
             profile.Id = Guid.NewGuid().ToString();
-
             profile.Password = HashPassword(profile.Password);
+            profile.Name = profile.Email;
 
             _ctx.Add(profile);
             _ctx.SaveChanges();

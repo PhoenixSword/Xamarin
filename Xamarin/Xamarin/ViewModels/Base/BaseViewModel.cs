@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 
-namespace Xamarin.ViewModels
+namespace Xamarin.ViewModels.Base
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
@@ -40,7 +40,7 @@ namespace Xamarin.ViewModels
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             var changed = PropertyChanged;
 

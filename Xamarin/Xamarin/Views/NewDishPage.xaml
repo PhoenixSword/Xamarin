@@ -12,68 +12,68 @@
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Save" IconImageSource="SaveIcon.png"  Clicked="Save_Clicked" Priority="2"/>
+        <ToolbarItem Text="Save" IconImageSource="SaveIcon.png" Command="{Binding SaveCommand}" Priority="2"/>
     </ContentPage.ToolbarItems>
     
     <ContentPage.Content>
-        <ScrollView x:Name="ScrollView" BackgroundColor="{DynamicResource Background}">
-            <StackLayout x:Name="StackLayout" Spacing="20" Padding="15">
-                <Image x:Name="SelectedImage" Source="{Binding selectedImageFile}" WidthRequest="200" HeightRequest="300">
+        <ScrollView BackgroundColor="{DynamicResource Background}">
+            <StackLayout Spacing="20" Padding="15">
+                <Image Source="{Binding ImageSource}" WidthRequest="200" HeightRequest="300">
                     <Image.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="Image_Clicked" />
+                        <TapGestureRecognizer Command="{Binding ImageCommand}"/>
                     </Image.GestureRecognizers>
                 </Image>
-
                 <Label Text="Name" FontSize="Medium" />
-                <xamarin:CustomEntry Text="{Binding Dish.Name}" FontSize="18" />
+                <xamarin:CustomEntry Text="{Binding Name}" FontSize="18" />
                 <Label Text="Description" FontSize="Medium" />
-                <xamarin:CustomEntry Text="{Binding Dish.Description}" FontSize="18" />
+                <xamarin:CustomEntry Text="{Binding Description}" FontSize="18" />
                 <FlexLayout AlignItems="Center" JustifyContent="SpaceAround">
                     <Label Text="Ingredients" 
                            HorizontalTextAlignment="Center"
                            FontSize="24" 
                            WidthRequest="150"/>
                 </FlexLayout>
-
-                <ListView x:Name="IngredientsList"
-                          ItemsSource="{Binding}"
+                <ListView ItemsSource="{Binding Ingredients}"
                           HasUnevenRows="True"
-                          SeparatorVisibility="None">
+                          SeparatorVisibility="None"
+                          HeightRequest="{Binding ListHeight}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
                             <FlexLayout Margin="0,1" AlignItems="Center" JustifyContent="SpaceAround">
-                                <xamarin:CustomEntry Text="{Binding Name}" 
+                                    <xamarin:CustomEntry Text="{Binding Name}" 
                                                      HorizontalTextAlignment="Center"
                                                      FontSize="18" 
                                                      WidthRequest="95"
                                                      HeightRequest="50"
                                                      Placeholder="Name"/>
                                     <xamarin:CustomEntry Text="{Binding Count}" 
-                                                     HorizontalTextAlignment="Center"
-                                                     FontSize="18" 
-                                                     WidthRequest="95"
-                                                     HeightRequest="50"
-                                                     Placeholder="Count"/>
+                                                 HorizontalTextAlignment="Center"
+                                                 FontSize="18" 
+                                                 WidthRequest="95"
+                                                 HeightRequest="50"
+                                                 Placeholder="Count"/>
                                     <xamarin:CustomEntry Text="{Binding Price, Converter={StaticResource NumberConverter}}" 
-                                                     HorizontalTextAlignment="Center"
-                                                     FontSize="18" 
-                                                     WidthRequest="95"
-                                                     HeightRequest="50"
-                                                     Placeholder="Price">
-                                    <Entry.Behaviors><behaviors:NumberValidationBehavior></behaviors:NumberValidationBehavior></Entry.Behaviors>
-                                </xamarin:CustomEntry>
-                                <Image Source="DeleteIcon2.png" WidthRequest="20" HeightRequest="20">
-                                    <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="Delete_Ingredient" />
-                                    </Image.GestureRecognizers>
-                                </Image>
+                                                 HorizontalTextAlignment="Center"
+                                                 FontSize="18"
+                                                 WidthRequest="95"
+                                                 HeightRequest="50"
+                                                 Placeholder="Price">
+                                    <Entry.Behaviors>
+                                        <behaviors:NumberValidationBehavior></behaviors:NumberValidationBehavior>
+                                    </Entry.Behaviors>
+                                    </xamarin:CustomEntry>
+                                    <Image Source="DeleteIcon2.png" WidthRequest="20" HeightRequest="20">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="DeleteIngredient"/>
+                                        </Image.GestureRecognizers>
+                                    </Image>
                                 </FlexLayout>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <Button Clicked="Add" Text="Add" BackgroundColor="{DynamicResource ItemColor}" />
+                <Button Command="{Binding AddCommand}" Text="Add" BackgroundColor="{DynamicResource ItemColor}" />
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

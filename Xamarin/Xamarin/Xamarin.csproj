@@ -15,17 +15,24 @@
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="2.0.0" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="2.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.4" />
+    <PackageReference Include="Refractored.MvvmHelpers" Version="1.3.0" />
     <PackageReference Include="sqlite-net-pcl" Version="1.5.231" />
     <PackageReference Include="SQLiteNetExtensions" Version="2.1.0" />
     <PackageReference Include="Xam.Plugin.Connectivity" Version="3.2.0" />
     <PackageReference Include="Xam.Plugin.Media" Version="4.0.1.5" />
-    <PackageReference Include="Xamarin.Forms" Version="4.0.0.425677" />  
+    <PackageReference Include="Xamarin.Forms" Version="4.0.0.482894" />  
     <PackageReference Include="Xamarin.Essentials" Version="1.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Xamarin.Models\Xamarin.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Behaviors">
+      <HintPath>C:\Users\user\.nuget\packages\behaviors.forms\1.4.0\lib\netstandard1.0\Behaviors.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
