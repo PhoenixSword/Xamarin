@@ -1,5 +1,4 @@
-﻿
-namespace Xamarin.Models.Models
+﻿namespace Xamarin.Models.Models
 {
     public enum MenuItemType
     {
@@ -12,5 +11,7 @@ namespace Xamarin.Models.Models
         public MenuItemType Id { get; set; }
 
         public string Title { get; set; }
+
+        public string ImagePath { get; set; }
     }
 }

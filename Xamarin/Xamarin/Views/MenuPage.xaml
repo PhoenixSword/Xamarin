@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Xamarin.Views.MenuPage"
+             xmlns:local="clr-namespace:Xamarin;assembly=Xamarin"
              Title="Menu">
 
     <StackLayout VerticalOptions="FillAndExpand" BackgroundColor="{DynamicResource Background}" Padding="0, 50, 0, 0">
@@ -9,13 +10,12 @@
         <Image Source="{Binding ProfileImage}" WidthRequest="100" HeightRequest="200"/>
         <Label Text="{Binding ProfileName}" HorizontalTextAlignment="Center" FontSize="20" />
 
-        <ListView ItemsSource="{Binding MenuItems}" SelectedItem="{Binding ItemSelected, Mode=TwoWay}"  HasUnevenRows="True" Margin="0, 50, 0, 0">
-            <ListView.ItemTemplate>
+        <ListView x:Name="listView" ItemsSource="{Binding MenuItems}" SelectedItem="{Binding ItemSelected, Mode=TwoWay}"  HasUnevenRows="True" Margin="0, 50, 0, 0">
+            <ListView.ItemTemplate HorizontalOptions="Center" FontSize="30"> 
                 <DataTemplate>
                     <ViewCell>
-                        <Grid Padding="10">
-                            <Label Text="{Binding Title}" HorizontalTextAlignment="Center" FontSize="24"/>
-                        </Grid>
+                        <Label Text="{Binding Title}"/>
+                        <Image Source="{Binding ImagePath}"/>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>

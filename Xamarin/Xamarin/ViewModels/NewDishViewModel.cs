@@ -17,7 +17,8 @@ namespace Xamarin.ViewModels
     {
         private readonly DishesService _dishesService = new DishesService();
         private MediaFile SelectedImageFile { get; set; }
-        private NewDishPage _page;
+        private readonly NewDishPage _page;
+        private readonly Dish _currentDish;
 
         private string _id;
         public string Id
@@ -142,6 +143,20 @@ namespace Xamarin.ViewModels
                 Ingredients.Add(item);
             }
 
+            _currentDish = new Dish
+            {
+                Id = dishDetail.Dish.Id,
+                Sum = dishDetail.Dish.Sum,
+                Name = dishDetail.Dish.Name,
+                Description = dishDetail.Dish.Description,
+                Image = dishDetail.Dish.Image,
+                ImageSource = dishDetail.Dish.ImageSource,
+                Ingredients = dishDetail.Dish.Ingredients
+            };
+            foreach (Ingredient item in dishDetail.Dish.Ingredients)
+            {
+                Ingredients.Add(item);
+            }
             _page = page;
             ListHeight = Ingredients.Count * 60;
             var deleteButton = new ToolbarItem { Text = "Delete", IconImageSource = "DeleteIcon.png" };
@@ -206,16 +221,7 @@ namespace Xamarin.ViewModels
 
         public void Delete()
         {
-            var dish = new Dish
-            {
-                Id = Id,
-                Description = Description,
-                Ingredients = Ingredients.ToList(),
-                Name = Name,
-                Image = Image,
-                ImageSource = ImageSource
-            };
-            Db.Dishes.Remove(dish);
+            Db.Dishes.Remove(_currentDish);
             Db.SaveChanges();
             _dishesService.DeleteDishes(Id);
             _page.Navigation.PopAsync();

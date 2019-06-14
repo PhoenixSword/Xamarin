@@ -1,4 +1,5 @@
-﻿using Xamarin.ViewModels;
+﻿using Xamarin.Forms;
+using Xamarin.ViewModels;
 
 namespace Xamarin.Views
 {
@@ -8,6 +9,7 @@ namespace Xamarin.Views
         {
             InitializeComponent();
             BindingContext = new MenuPageViewModel(this);
+            listView.ItemTemplate = new DataTemplate(typeof(CustomCell));
         }
     }
 }

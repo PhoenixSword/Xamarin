@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Models.Models;
@@ -37,6 +38,8 @@ namespace Xamarin.ViewModels
         }
 
         public ICommand LoginCommand => new Command(async () => await LoginAsync());
+        public ICommand MicrosoftCommand => new Command(Microsoft);
+        public ICommand GoogleCommand => new Command(Google);
         public ICommand RegisterPageCommand => new Command(RegisterPage);
 
         private readonly Profile _test = new Profile
@@ -51,6 +54,14 @@ namespace Xamarin.ViewModels
             Application.Current.MainPage = new RegisterPage();
         }
 
+        private static void Google()
+        {
+            Application.Current.MainPage = new GooglePage();
+        }
+        private static void Microsoft()
+        {
+            Application.Current.MainPage = new MicrosoftPage();
+        }
         private async Task LoginAsync()
         {
             var name = Email;

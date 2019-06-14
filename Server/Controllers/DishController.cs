@@ -15,9 +15,15 @@ namespace Server.Controllers
         {
             _repo = repo;
         }
+        [HttpPost]
         public IEnumerable<Dish> GetDishes()
         {
             return _repo.GetDishes();
+        }
+        [HttpPost]
+        public void UpdateDishes(Dish dish)
+        {
+            _repo.UpdateDishes(dish);
         }
         [HttpDelete]
         public void DeleteDishes(string id)

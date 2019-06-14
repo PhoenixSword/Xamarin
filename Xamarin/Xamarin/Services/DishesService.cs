@@ -21,8 +21,9 @@ namespace Xamarin.Services
             try
             {
                 _client.Timeout = TimeSpan.FromMilliseconds(4000);
-                var result = await _client.GetStringAsync(path + "dish/getdishes");
-                return JsonConvert.DeserializeObject<List<Dish>>(result);
+                var httpResponseMessage = _client.PostAsync(path + "dish/getdishes", null).Result;
+                var resp = httpResponseMessage.Content.ReadAsStringAsync().Result;
+                return JsonConvert.DeserializeObject<List<Dish>>(resp);
             }
             catch (Exception)
             {
@@ -60,19 +61,6 @@ namespace Xamarin.Services
             }
         }
 
-        public async Task<Profile> GetProfile()
-        {
-            try
-            {
-                _client.Timeout = TimeSpan.FromMilliseconds(4000);
-                var result = await _client.GetStringAsync(path + "dish/getprofile");
-                return JsonConvert.DeserializeObject<Profile>(result);
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
         public async void UpdateProfile(Profile profile)
         {
             try

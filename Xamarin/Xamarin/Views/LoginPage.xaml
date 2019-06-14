@@ -8,6 +8,9 @@
             <Entry Text="{Binding Password}" IsPassword="True" Placeholder="Password"></Entry>
             <Button Text="Login" Command="{Binding LoginCommand}" BackgroundColor="{DynamicResource ItemColor}"></Button>
             <Button Text="Register" Command="{Binding RegisterPageCommand}" BackgroundColor="{DynamicResource ItemColor}"></Button>
+            <Button Text="Google" Command="{Binding GoogleCommand}" BackgroundColor="{DynamicResource ItemColor}"></Button>
+            <Button Text="Microsoft" Command="{Binding MicrosoftCommand}" BackgroundColor="{DynamicResource ItemColor}"></Button>
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

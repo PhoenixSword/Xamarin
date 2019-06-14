@@ -70,11 +70,10 @@ namespace Xamarin.ViewModels
 
             _menuItems = new ObservableCollection<HomeMenuItem>
             {
-                new HomeMenuItem {Id = MenuItemType.MyDishes, Title = "My Dishes"},
-                new HomeMenuItem {Id = MenuItemType.Settings, Title = "Settings"},
-                new HomeMenuItem {Id = MenuItemType.LogOut, Title = "Logout"}
+                new HomeMenuItem {Id = MenuItemType.MyDishes, Title = "My Dishes", ImagePath = "MyDishes.png"},
+                new HomeMenuItem {Id = MenuItemType.Settings, Title = "Settings", ImagePath = "Settings.png"},
+                new HomeMenuItem {Id = MenuItemType.LogOut, Title = "Logout", ImagePath = "Logout.png"}
             };
-
             MessagingCenter.Subscribe<object, Profile>(this, MessageKeys.Settings, (s, profile) =>
             {
                 ProfileImage = profile.Image != null

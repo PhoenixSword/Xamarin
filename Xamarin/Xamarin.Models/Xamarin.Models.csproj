@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Include="SQLiteNetExtensions" Version="2.1.0" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />
-    <PackageReference Include="Xamarin.Forms" Version="4.0.0.482894" />
+    <PackageReference Include="Xamarin.Forms" Version="4.0.0.497661" />
   </ItemGroup>
 
 

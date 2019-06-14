@@ -5,6 +5,7 @@ using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using Xamarin.ViewModels.Base;
+using System;
 
 namespace Xamarin
 {
@@ -35,7 +36,6 @@ namespace Xamarin
             if (!Current.Properties.TryGetValue("name", out _)) Current.Properties["name"] = null;
             if (!Current.Properties.TryGetValue("image", out _)) Current.Properties["image"] = null;
 
-            MainPage = new LoginPage();
             if (Current.Properties["id"] != null)
             {
                 MainPage = new MainPage();
@@ -87,5 +87,24 @@ namespace Xamarin
         {
             // Handle when your app resumes
         }
+
+
+        public static bool IsLoggedIn
+        {
+            get { return Current.Properties.TryGetValue("id", out _); }
+        }
+
+     
+        public static void SaveToken(string id, string name, string image)
+        {
+            Current.Properties["id"] = id;
+            Current.Properties["name"] = name;
+            Current.Properties["image"] = image;
+        }
+
+        public static Action SuccessfulLoginAction => new Action(() =>
+                                                                    {
+                                                                        Current.MainPage = new MainPage();
+                                                                    });
     }
 }
