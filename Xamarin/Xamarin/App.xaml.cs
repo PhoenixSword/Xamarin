@@ -6,12 +6,17 @@ using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using Xamarin.ViewModels.Base;
 using System;
+using System.Net;
+using Android.Graphics;
+using System.IO;
+using Plugin.Media.Abstractions;
 
 namespace Xamarin
 {
     public partial class App
     {
         public const string Dbfilename = "app.db";
+        public static bool isLogin = false;
 
         private readonly Dictionary<string, string> _orangeStyle = new Dictionary<string, string>
         {
@@ -85,7 +90,10 @@ namespace Xamarin
 
         protected override void OnResume()
         {
-            // Handle when your app resumes
+            if(isLogin)
+                MainPage = new MainPage();
+            else
+                MainPage = new LoginPage();
         }
 
 
@@ -99,12 +107,18 @@ namespace Xamarin
         {
             Current.Properties["id"] = id;
             Current.Properties["name"] = name;
-            Current.Properties["image"] = image;
+            if(image != null)
+            using (var client = new WebClient())
+            {
+                var content = client.DownloadData(image);
+                Current.Properties["image"] = content;
+            }
         }
 
-        public static Action SuccessfulLoginAction => new Action(() =>
-                                                                    {
-                                                                        Current.MainPage = new MainPage();
-                                                                    });
+        public static Action SuccessfulLoginAction 
+        => new Action(() =>
+        {
+            isLogin = true;
+        });
     }
 }

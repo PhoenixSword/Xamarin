@@ -83,6 +83,7 @@
   <ItemGroup>
     <Compile Include="AndroidDbPath.cs" />
     <Compile Include="GooglePageRenderer_Droid.cs" />
+    <Compile Include="FacebookPageRenderer_Droid.cs" />
     <Compile Include="MicrosoftPageRenderer_Droid.cs" />
     <Compile Include="Renderer\CustomPickerRenderer.cs" />
     <Compile Include="MainActivity.cs" />
@@ -178,6 +179,15 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\Logout.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\FacebookButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\MicrosoftButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\GoogleButton.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

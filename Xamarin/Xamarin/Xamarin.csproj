@@ -34,6 +34,9 @@
     <Reference Include="Behaviors">
       <HintPath>C:\Users\user\.nuget\packages\behaviors.forms\1.4.0\lib\netstandard1.0\Behaviors.dll</HintPath>
     </Reference>
+    <Reference Include="Mono.Android">
+      <HintPath>C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\MonoAndroid\v9.0\Mono.Android.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

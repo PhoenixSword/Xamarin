@@ -23,7 +23,10 @@ namespace Xamarin.Services
                 _client.Timeout = TimeSpan.FromMilliseconds(4000);
                 var httpResponseMessage = _client.PostAsync(path + "dish/getdishes", null).Result;
                 var resp = httpResponseMessage.Content.ReadAsStringAsync().Result;
-                return JsonConvert.DeserializeObject<List<Dish>>(resp);
+                if (httpResponseMessage.StatusCode == System.Net.HttpStatusCode.OK)
+                    return JsonConvert.DeserializeObject<List<Dish>>(resp);
+                else
+                    return null;
             }
             catch (Exception)
             {
@@ -88,7 +91,10 @@ namespace Xamarin.Services
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 var httpResponseMessage = _client.PostAsync(path + "profile/login", content).Result;
                 var resp = httpResponseMessage.Content.ReadAsStringAsync().Result;
-                return JsonConvert.DeserializeObject<Profile>(resp);
+                if (httpResponseMessage.StatusCode == System.Net.HttpStatusCode.OK)
+                    return JsonConvert.DeserializeObject<Profile>(resp);
+                else
+                    return null;
             }
             catch (Exception)
             {
@@ -105,7 +111,10 @@ namespace Xamarin.Services
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 var httpResponseMessage = _client.PostAsync(path + "profile/register", content).Result;
                 var resp = httpResponseMessage.Content.ReadAsStringAsync().Result;
-                return JsonConvert.DeserializeObject<Profile>(resp);
+                if (httpResponseMessage.StatusCode == System.Net.HttpStatusCode.OK)
+                    return JsonConvert.DeserializeObject<Profile>(resp);
+                else
+                    return null;
             }
             catch (Exception)
             {

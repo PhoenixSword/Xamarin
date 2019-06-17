@@ -8,11 +8,11 @@ using System.Net;
 using Newtonsoft.Json.Linq;
 using Xamarin.Views;
 
-[assembly: ExportRenderer(typeof(GooglePage), typeof(GooglePageRenderer_Droid))]
+[assembly: ExportRenderer(typeof(FacebookPage), typeof(FacebookPageRenderer_Droid))]
 namespace Xamarin.Droid
 {
     [Obsolete]
-    public class GooglePageRenderer_Droid : PageRenderer
+    public class FacebookPageRenderer_Droid : PageRenderer
     {
         protected override void OnElementChanged(ElementChangedEventArgs<Page> e)
         {
@@ -21,17 +21,11 @@ namespace Xamarin.Droid
             var activity = Context as Activity;
             var auth = new OAuth2Authenticator
             (
-                "340945119693-65r7k3u9peg7414nvle903g2nkhav2da.apps.googleusercontent.com",
-                "QLnSLXjvl9CpJmX8MN4_qD0y",
-                "email",
-                new Uri("https://accounts.google.com/o/oauth2/v2/auth"),
-                new Uri("com.xamarin.dishes.googleauth:/oauth2redirect"),
-                new Uri("https://accounts.google.com/o/oauth2/token"),
-                isUsingNativeUI: true
-            )
-            {
-                AllowCancel = true,
-            };
+             clientId: "322820598640624",
+             scope: "",
+             authorizeUrl: new Uri("https://m.facebook.com/dialog/oauth/"),
+             redirectUrl: new Uri("http://www.facebook.com/connect/login_success.html")
+            );
 
             var result = new LoginResult{};
 
@@ -39,24 +33,21 @@ namespace Xamarin.Droid
             {
                 if (eventArgs.Account == null) return;
                 var userId = "";
-                var request = new OAuth2Request("GET", new Uri("https://www.googleapis.com/oauth2/v2/userinfo"), null, eventArgs?.Account);
-                var response = request.GetResponseAsync().Result;
+                var request = new OAuth2Request("GET", new Uri("https://graph.facebook.com/me?fields=name,picture,cover,birthday"), null, eventArgs.Account);
+                var response = request.GetResponseAsync()?.Result;
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     var userJson = response.GetResponseText();
                     var jobject = JObject.Parse(userJson);
                     result.LoginState = LoginState.Success;
-                    result.Email = jobject["emails"]?["preferred"].ToString();
-                    result.FirstName = jobject["first_name"]?.ToString();
-                    result.LastName = jobject["last_name"]?.ToString();
-                    result.ImageUrl = jobject["picture"]?["data"]?["url"]?.ToString();
+                    result.FirstName = jobject["name"]?.ToString();
                     userId = jobject["id"]?.ToString();
+                    result.ImageUrl = "https://graph.facebook.com/" + userId + "/picture?type=large";
                     result.UserId = userId;
-                    result.ImageUrl = $"https://apis.live.net/v5.0/{userId}/picture";
                 }
                 if (eventArgs.IsAuthenticated)
                 {
-                    App.SaveToken(userId, result.FirstName + " " + result.LastName, null);
+                    App.SaveToken(userId, result.FirstName + " " + result.LastName, result.ImageUrl);
                     App.SuccessfulLoginAction.Invoke();
                 }
                 else
@@ -64,7 +55,7 @@ namespace Xamarin.Droid
                     // The user cancelled
                 }
             };
-            
+
             activity.StartActivity(auth.GetUI(activity));
         }
     }

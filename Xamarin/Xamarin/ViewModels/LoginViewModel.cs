@@ -40,6 +40,7 @@ namespace Xamarin.ViewModels
         public ICommand LoginCommand => new Command(async () => await LoginAsync());
         public ICommand MicrosoftCommand => new Command(Microsoft);
         public ICommand GoogleCommand => new Command(Google);
+        public ICommand FacebookCommand => new Command(Facebook);
         public ICommand RegisterPageCommand => new Command(RegisterPage);
 
         private readonly Profile _test = new Profile
@@ -57,6 +58,10 @@ namespace Xamarin.ViewModels
         private static void Google()
         {
             Application.Current.MainPage = new GooglePage();
+        }
+        private static void Facebook()
+        {
+            Application.Current.MainPage = new FacebookPage();
         }
         private static void Microsoft()
         {

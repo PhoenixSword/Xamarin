@@ -8,9 +8,23 @@
             <Entry Text="{Binding Password}" IsPassword="True" Placeholder="Password"></Entry>
             <Button Text="Login" Command="{Binding LoginCommand}" BackgroundColor="{DynamicResource ItemColor}"></Button>
             <Button Text="Register" Command="{Binding RegisterPageCommand}" BackgroundColor="{DynamicResource ItemColor}"></Button>
-            <Button Text="Google" Command="{Binding GoogleCommand}" BackgroundColor="{DynamicResource ItemColor}"></Button>
-            <Button Text="Microsoft" Command="{Binding MicrosoftCommand}" BackgroundColor="{DynamicResource ItemColor}"></Button>
-
+            <FlexLayout JustifyContent="SpaceBetween" Wrap="Wrap">
+                <Image Source="GoogleButton.png">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoogleCommand}"/>
+                    </Image.GestureRecognizers>
+                </Image>
+                <Image Source="MicrosoftButton.png">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding MicrosoftCommand}"/>
+                    </Image.GestureRecognizers>
+                </Image>
+                <Image Source="FacebookButton.png" Margin="0,15,0,0">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding FacebookCommand}"/>
+                    </Image.GestureRecognizers>
+                </Image>
+            </FlexLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

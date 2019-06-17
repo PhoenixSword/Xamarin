@@ -36,6 +36,7 @@ namespace Xamarin.Droid
 
             auth.Completed += (sender, eventArgs) =>
             {
+                if (eventArgs.Account == null) return;
                 var userId = "";
                 var request = new OAuth2Request("GET", new Uri("https://apis.live.net/v5.0/me"), null, eventArgs.Account);
                 var response = request.GetResponseAsync()?.Result;
@@ -47,10 +48,8 @@ namespace Xamarin.Droid
                     result.Email = jobject["emails"]?["preferred"].ToString();
                     result.FirstName = jobject["first_name"]?.ToString();
                     result.LastName = jobject["last_name"]?.ToString();
-                    result.ImageUrl = jobject["picture"]?["data"]?["url"]?.ToString();
                     userId = jobject["id"]?.ToString();
                     result.UserId = userId;
-                    result.ImageUrl = $"https://apis.live.net/v5.0/{userId}/picture";
                 }
                 if (eventArgs.IsAuthenticated)
                 {
