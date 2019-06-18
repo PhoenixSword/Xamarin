@@ -21,13 +21,13 @@ namespace Xamarin.Droid
             var activity = Context as Activity;
             var auth = new OAuth2Authenticator
             (
-             clientId: "322820598640624",
-             scope: "",
-             authorizeUrl: new Uri("https://m.facebook.com/dialog/oauth/"),
-             redirectUrl: new Uri("http://www.facebook.com/connect/login_success.html")
+                clientId: "322820598640624",
+                scope: "",
+                authorizeUrl: new Uri("https://m.facebook.com/dialog/oauth/"),
+                redirectUrl: new Uri("http://www.facebook.com/connect/login_success.html")
             );
 
-            var result = new LoginResult{};
+            var result = new LoginResult { };
 
             auth.Completed += (sender, eventArgs) =>
             {

@@ -96,13 +96,11 @@ namespace Xamarin
                 MainPage = new LoginPage();
         }
 
-
         public static bool IsLoggedIn
         {
             get { return Current.Properties.TryGetValue("id", out _); }
         }
 
-     
         public static void SaveToken(string id, string name, string image)
         {
             Current.Properties["id"] = id;

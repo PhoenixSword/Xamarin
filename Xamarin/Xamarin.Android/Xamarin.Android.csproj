@@ -82,8 +82,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AndroidDbPath.cs" />
-    <Compile Include="GooglePageRenderer_Droid.cs" />
     <Compile Include="FacebookPageRenderer_Droid.cs" />
+    <Compile Include="GoogleAuthInterceptor.cs" />
+    <Compile Include="GoogleRenderer.cs" />
     <Compile Include="MicrosoftPageRenderer_Droid.cs" />
     <Compile Include="Renderer\CustomPickerRenderer.cs" />
     <Compile Include="MainActivity.cs" />

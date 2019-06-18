@@ -22,7 +22,7 @@ namespace Xamarin.Services
             {
                 _client.Timeout = TimeSpan.FromMilliseconds(4000);
                 var httpResponseMessage = _client.PostAsync(path + "dish/getdishes", null).Result;
-                var resp = httpResponseMessage.Content.ReadAsStringAsync().Result;
+                var resp = await httpResponseMessage.Content.ReadAsStringAsync();
                 if (httpResponseMessage.StatusCode == System.Net.HttpStatusCode.OK)
                     return JsonConvert.DeserializeObject<List<Dish>>(resp);
                 else

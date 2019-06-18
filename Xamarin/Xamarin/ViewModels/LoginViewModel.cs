@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -100,5 +101,6 @@ namespace Xamarin.ViewModels
             }
             DependencyService.Get<IMessage>().LongAlert("Wrong credentials found!");
         }
+
     }
 }
