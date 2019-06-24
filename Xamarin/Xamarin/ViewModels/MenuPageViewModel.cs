@@ -74,17 +74,23 @@ namespace Xamarin.ViewModels
                 new HomeMenuItem {Id = MenuItemType.Settings, Title = "Settings", ImagePath = "Settings.png"},
                 new HomeMenuItem {Id = MenuItemType.LogOut, Title = "Logout", ImagePath = "Logout.png"}
             };
-            MessagingCenter.Subscribe<object, Profile>(this, MessageKeys.Settings, (s, profile) =>
+            MessagingCenter.Subscribe<object, Profile>(this, MessageKeys.Settings, async (s, profile) =>
             {
                 ProfileImage = profile.Image != null
                     ? ImageSource.FromStream(() => new MemoryStream(profile.Image))
                     : ImageSource.FromFile("Profile.jpg");
                 ProfileName = profile.Name;
+
+                Application.Current.Properties["id"] = profile.Id;
+                Application.Current.Properties["name"] = profile.Name;
+                Application.Current.Properties["image"] = profile.Image;
+                await Application.Current.SavePropertiesAsync();
             });
         }
 
         private async Task CloseAppAsync()
         {
+            await Application.Current.SavePropertiesAsync();
             var result = await _page.DisplayAlert("Exit? ", "Do you really want to exit the application?", "Yes", "No");
             if (!result) return;
             System.Diagnostics.Process.GetCurrentProcess().Kill();

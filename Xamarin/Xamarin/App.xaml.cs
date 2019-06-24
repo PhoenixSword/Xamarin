@@ -16,7 +16,6 @@ namespace Xamarin
     public partial class App
     {
         public const string Dbfilename = "app.db";
-        public static bool isLogin = false;
 
         private readonly Dictionary<string, string> _orangeStyle = new Dictionary<string, string>
         {
@@ -90,15 +89,6 @@ namespace Xamarin
 
         protected override void OnResume()
         {
-            if(isLogin)
-                MainPage = new MainPage();
-            else
-                MainPage = new LoginPage();
-        }
-
-        public static bool IsLoggedIn
-        {
-            get { return Current.Properties.TryGetValue("id", out _); }
         }
 
         public static void SaveToken(string id, string name, string image)
@@ -116,7 +106,7 @@ namespace Xamarin
         public static Action SuccessfulLoginAction 
         => new Action(() =>
         {
-            isLogin = true;
+            Current.MainPage = new MainPage();
         });
     }
 }

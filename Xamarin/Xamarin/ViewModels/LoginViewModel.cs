@@ -74,12 +74,8 @@ namespace Xamarin.ViewModels
             var password = Password;
             if (name == "test" && password == "test")
             {
-                Application.Current.Properties["id"] = _test.Id;
-                Application.Current.Properties["name"] = _test.Name;
-                Application.Current.Properties["image"] = _test.Image;
-                Application.Current.MainPage = new MainPage();
                 MessagingCenter.Send<object, Profile>(this, MessageKeys.Settings, _test);
-                await Application.Current.SavePropertiesAsync();
+                Application.Current.MainPage = new MainPage();
                 return;
             }
             if (name == null || password == null)
@@ -91,12 +87,8 @@ namespace Xamarin.ViewModels
 
             if (login != null)
             {
-                Application.Current.Properties["id"] = login.Id;
-                Application.Current.Properties["name"] = login.Name;
-                Application.Current.Properties["image"] = login.Image;
-                await Application.Current.SavePropertiesAsync();
-                Application.Current.MainPage = new MainPage();
                 MessagingCenter.Send<object, Profile>(this, MessageKeys.Settings, login);
+                Application.Current.MainPage = new MainPage();
                 return;
             }
             DependencyService.Get<IMessage>().LongAlert("Wrong credentials found!");

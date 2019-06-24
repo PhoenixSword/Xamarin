@@ -22,7 +22,7 @@ namespace Server.Data.Repositories.Concrete
 
         public IEnumerable<Dish> GetDishes()
         {
-            var list = Dishes.Select(d => d.Map()).ToList();
+            var list = Dishes.ToList();
             return list;
         }
 

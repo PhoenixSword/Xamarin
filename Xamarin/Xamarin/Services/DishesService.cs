@@ -14,7 +14,6 @@ namespace Xamarin.Services
     {
         string path = "http://192.168.0.141:8080/api/";
 
-        //private HttpClient _client = new HttpClient{DefaultRequestHeaders = {{"token", Application.Current.Properties["token"].ToString()}}};
         private HttpClient _client = new HttpClient();
         public async Task<IEnumerable<Dish>> GetDishes()
         {

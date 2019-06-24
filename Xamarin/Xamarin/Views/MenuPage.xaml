@@ -10,7 +10,7 @@
         <Image Source="{Binding ProfileImage}" WidthRequest="100" HeightRequest="200"/>
         <Label Text="{Binding ProfileName}" HorizontalTextAlignment="Center" FontSize="20" />
 
-        <ListView x:Name="listView" ItemsSource="{Binding MenuItems}" SelectedItem="{Binding ItemSelected, Mode=TwoWay}"  HasUnevenRows="True" Margin="0, 50, 0, 0">
+        <ListView x:Name="listView" ItemsSource="{Binding MenuItems}" SelectedItem="{Binding ItemSelected, Mode=TwoWay}" HasUnevenRows="True" HorizontalOptions="Center">
             <ListView.ItemTemplate HorizontalOptions="Center" FontSize="30"> 
                 <DataTemplate>
                     <ViewCell>

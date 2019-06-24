@@ -36,7 +36,11 @@ namespace Xamarin.Droid
 
             auth.Completed += (sender, eventArgs) =>
             {
-                if (eventArgs.Account == null) return;
+                if (eventArgs.Account == null)
+                {
+                    new AlertDialog.Builder(Context).SetTitle("Authentication canceled").SetMessage("You didn't completed the authentication process").Show();
+                    return;
+                }
                 var userId = "";
                 var request = new OAuth2Request("GET", new Uri("https://apis.live.net/v5.0/me"), null, eventArgs.Account);
                 var response = request.GetResponseAsync()?.Result;
@@ -55,10 +59,6 @@ namespace Xamarin.Droid
                 {
                     App.SaveToken(userId, result.FirstName + " " + result.LastName, null);
                     App.SuccessfulLoginAction.Invoke();
-                }
-                else
-                {
-                    // The user cancelled
                 }
             };
 

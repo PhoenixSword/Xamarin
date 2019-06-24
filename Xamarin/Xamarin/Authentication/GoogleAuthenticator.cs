@@ -7,7 +7,6 @@ namespace Xamarin.Authentication
     {
         private const string AuthorizeUrl = "https://accounts.google.com/o/oauth2/v2/auth";
         private const string AccessTokenUrl = "https://www.googleapis.com/oauth2/v4/token";
-        private const bool IsUsingNativeUI = true;
 
         private OAuth2Authenticator _auth;
         private IGoogleAuthenticationDelegate _authenticationDelegate;
@@ -20,7 +19,7 @@ namespace Xamarin.Authentication
                                             new Uri(AuthorizeUrl),
                                             new Uri(redirectUrl),
                                             new Uri(AccessTokenUrl),
-                                            null, IsUsingNativeUI);
+                                            null, true);
 
             _auth.Completed += OnAuthenticationCompleted;
             _auth.Error += OnAuthenticationFailed;
@@ -40,11 +39,7 @@ namespace Xamarin.Authentication
         {
             if (e.IsAuthenticated)
             {
-                var token = new GoogleOAuthToken
-                {
-                    TokenType = e.Account.Properties["token_type"],
-                    AccessToken = e.Account.Properties["access_token"]
-                };
+                var token = e.Account.Properties["access_token"];
                 _authenticationDelegate.OnAuthenticationCompleted(token);
             }
             else

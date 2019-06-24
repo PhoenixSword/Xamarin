@@ -153,10 +153,7 @@ namespace Xamarin.ViewModels
                 ImageSource = dishDetail.Dish.ImageSource,
                 Ingredients = dishDetail.Dish.Ingredients
             };
-            foreach (Ingredient item in dishDetail.Dish.Ingredients)
-            {
-                Ingredients.Add(item);
-            }
+         
             _page = page;
             ListHeight = Ingredients.Count * 60;
             var deleteButton = new ToolbarItem { Text = "Delete", IconImageSource = "DeleteIcon.png" };

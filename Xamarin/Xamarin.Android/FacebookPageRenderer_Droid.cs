@@ -28,10 +28,13 @@ namespace Xamarin.Droid
             );
 
             var result = new LoginResult { };
-
             auth.Completed += (sender, eventArgs) =>
             {
-                if (eventArgs.Account == null) return;
+                if (eventArgs.Account == null)
+                {
+                    new AlertDialog.Builder(Context).SetTitle("Authentication canceled").SetMessage("You didn't completed the authentication process").Show();
+                    return;
+                }
                 var userId = "";
                 var request = new OAuth2Request("GET", new Uri("https://graph.facebook.com/me?fields=name,picture,cover,birthday"), null, eventArgs.Account);
                 var response = request.GetResponseAsync()?.Result;
@@ -49,10 +52,6 @@ namespace Xamarin.Droid
                 {
                     App.SaveToken(userId, result.FirstName + " " + result.LastName, result.ImageUrl);
                     App.SuccessfulLoginAction.Invoke();
-                }
-                else
-                {
-                    // The user cancelled
                 }
             };
 
