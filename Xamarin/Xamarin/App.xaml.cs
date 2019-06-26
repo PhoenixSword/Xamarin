@@ -7,9 +7,6 @@ using Microsoft.AppCenter.Crashes;
 using Xamarin.ViewModels.Base;
 using System;
 using System.Net;
-using Android.Graphics;
-using System.IO;
-using Plugin.Media.Abstractions;
 
 namespace Xamarin
 {
@@ -95,7 +92,7 @@ namespace Xamarin
         {
             Current.Properties["id"] = id;
             Current.Properties["name"] = name;
-            if(image != null)
+            if (image == null) return;
             using (var client = new WebClient())
             {
                 var content = client.DownloadData(image);
@@ -104,9 +101,9 @@ namespace Xamarin
         }
 
         public static Action SuccessfulLoginAction 
-        => new Action(() =>
+        => () =>
         {
             Current.MainPage = new MainPage();
-        });
+        };
     }
 }

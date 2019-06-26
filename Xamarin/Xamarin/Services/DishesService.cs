@@ -5,8 +5,8 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Xamarin.Models.Models;
-using Xamarin.Models.Models.Mappings;
 
 namespace Xamarin.Services
 {
@@ -22,10 +22,7 @@ namespace Xamarin.Services
                 _client.Timeout = TimeSpan.FromMilliseconds(4000);
                 var httpResponseMessage = _client.PostAsync(path + "dish/getdishes", null).Result;
                 var resp = await httpResponseMessage.Content.ReadAsStringAsync();
-                if (httpResponseMessage.StatusCode == System.Net.HttpStatusCode.OK)
-                    return JsonConvert.DeserializeObject<List<Dish>>(resp);
-                else
-                    return null;
+                return httpResponseMessage.StatusCode == System.Net.HttpStatusCode.OK ? JsonConvert.DeserializeObject<List<Dish>>(resp) : null;
             }
             catch (Exception)
             {
@@ -51,8 +48,13 @@ namespace Xamarin.Services
             try
             {
                 _client.Timeout = TimeSpan.FromMilliseconds(3000);
-                dish = dish.Map();
-                var json = JsonConvert.SerializeObject(dish);
+                dish.ImageSource = null;
+                var settings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                };
+                settings.Converters.Add(new StringEnumConverter());
+                var json = JsonConvert.SerializeObject(dish, settings);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 await _client.PostAsync(path + "dish/updatedishes", content);
@@ -68,8 +70,13 @@ namespace Xamarin.Services
             try
             {
                 _client.Timeout = TimeSpan.FromMilliseconds(3000);
-                profile = profile.Map();
-                var json = JsonConvert.SerializeObject(profile);
+                profile.ImageSource = null;
+                var settings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                };
+                settings.Converters.Add(new StringEnumConverter());
+                var json = JsonConvert.SerializeObject(profile, settings);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 await _client.PostAsync(path + "profile/updateprofile", content);
@@ -92,8 +99,7 @@ namespace Xamarin.Services
                 var resp = httpResponseMessage.Content.ReadAsStringAsync().Result;
                 if (httpResponseMessage.StatusCode == System.Net.HttpStatusCode.OK)
                     return JsonConvert.DeserializeObject<Profile>(resp);
-                else
-                    return null;
+                return null;
             }
             catch (Exception)
             {

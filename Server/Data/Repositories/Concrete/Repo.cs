@@ -6,7 +6,6 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Server.Data.Repositories.Abstract;
 using Xamarin.Models.Models;
-using Xamarin.Models.Models.Mappings;
 
 namespace Server.Data.Repositories.Concrete
 {

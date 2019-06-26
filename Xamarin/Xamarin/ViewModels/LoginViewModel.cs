@@ -1,7 +1,4 @@
-﻿using System;
-using System.Net;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Models.Models;
 using Xamarin.Services;
@@ -38,7 +35,7 @@ namespace Xamarin.ViewModels
             }
         }
 
-        public ICommand LoginCommand => new Command(async () => await LoginAsync());
+        public ICommand LoginCommand => new Command(Login);
         public ICommand MicrosoftCommand => new Command(Microsoft);
         public ICommand GoogleCommand => new Command(Google);
         public ICommand FacebookCommand => new Command(Facebook);
@@ -68,7 +65,7 @@ namespace Xamarin.ViewModels
         {
             Application.Current.MainPage = new MicrosoftPage();
         }
-        private async Task LoginAsync()
+        private void Login()
         {
             var name = Email;
             var password = Password;
