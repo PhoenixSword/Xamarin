@@ -66,7 +66,7 @@ namespace Xamarin.ViewModels
             Application.Current.MainPage = new MicrosoftPage();
         }
         private void Login()
-        {
+        { 
             var name = Email;
             var password = Password;
             if (name == "test" && password == "test")
@@ -84,6 +84,9 @@ namespace Xamarin.ViewModels
 
             if (login != null)
             {
+                Application.Current.Properties["id"] = login.Id;
+                Application.Current.Properties["name"] = login.Name;
+                Application.Current.Properties["image"] = login.Image;
                 MessagingCenter.Send<object, Profile>(this, MessageKeys.Settings, login);
                 Application.Current.MainPage = new MainPage();
                 return;

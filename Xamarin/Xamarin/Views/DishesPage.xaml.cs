@@ -17,18 +17,18 @@ namespace Xamarin.Views
         {
             if (_firstStart)
             {
-                Loading.IsVisible = true;
-                Task.Run(() => _viewModel.GetDishes());
+                Task.Run(() => _viewModel.GetDishes(true)).ContinueWith(res =>
+                {
+                     //Loading.IsVisible = false;
+                    _firstStart = false;
+                    return true;
+                });
             }
             else
             {
                 _viewModel.LoadDishesCommand.Execute(null);
             }
             base.OnAppearing();
-
-            if (!_firstStart) return;
-            Loading.IsVisible = false;
-            _firstStart = false;
         }
     }
 }

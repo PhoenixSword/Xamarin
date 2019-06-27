@@ -7,7 +7,6 @@
     <MasterDetailPage.Master>
         <views:MenuPage />
     </MasterDetailPage.Master>
-
     <MasterDetailPage.Detail>
         <NavigationPage>
             <NavigationPage.IconImageSource>

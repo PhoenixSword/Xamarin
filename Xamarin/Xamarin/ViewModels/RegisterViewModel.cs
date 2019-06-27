@@ -75,9 +75,7 @@ namespace Xamarin.ViewModels
                 Application.Current.Properties["id"] = register.Id;
                 Application.Current.Properties["name"] = register.Name;
                 Application.Current.Properties["image"] = register.Image;
-                Application.Current.MainPage = new MainPage();
                 MessagingCenter.Send<object, Profile>(this, MessageKeys.Settings, register);
-                await Application.Current.SavePropertiesAsync();
                 return;
             }
             DependencyService.Get<IMessage>().LongAlert("Wrong credentials found!");

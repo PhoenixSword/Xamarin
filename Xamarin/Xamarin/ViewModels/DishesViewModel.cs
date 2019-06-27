@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Plugin.Connectivity;
 using Xamarin.Forms;
@@ -18,6 +19,19 @@ namespace Xamarin.ViewModels
     {
         private Page _page;
         private readonly DishesService _dishesService = new DishesService();
+
+        private bool _loaderIsVisible;
+        public bool LoaderIsVisible
+        {
+            get => _loaderIsVisible;
+            set
+            {
+                if (_loaderIsVisible == value)
+                    return;
+                _loaderIsVisible = value;
+                OnPropertyChanged();
+            }
+        }
 
         private string _connectionLabel;
         public string ConnectionLabel
@@ -45,7 +59,7 @@ namespace Xamarin.ViewModels
             }
         }
 
-        private bool _labelIsVisible;
+        private bool _labelIsVisible = true;
         public bool LabelIsVisible
         {
             get => _labelIsVisible;
@@ -90,9 +104,10 @@ namespace Xamarin.ViewModels
         {
             Title = "My Dishes";
             Dishes = new ObservableCollection<Dish>();
+            LoaderIsVisible = false;
             LoadDishesCommand = new Command(ExecuteLoadDishesCommand);
             AddItemCommand = new Command(async () => await AddItemAsync());
-            RefreshCommand = new Command(async () => await RefreshAsync());
+            RefreshCommand = new Command(RefreshAsync);
             _page = page;
             var busy = false;
             MessagingCenter.Subscribe<object, bool>(this, MessageKeys.Connection, (s, e) =>
@@ -157,17 +172,18 @@ namespace Xamarin.ViewModels
             await _page.Navigation.PushAsync(new NewDishPage());
         }
 
-        private  async Task RefreshAsync()
+        private void RefreshAsync()
         {
-            await GetDishes();
+            Task.Run(() => GetDishes(true));
         }
 
-        private void ExecuteLoadDishesCommand()
+        private void ExecuteLoadDishesCommand(object parameter)
         {
              if (IsBusy)
                 return;
 
-             IsBusy = true;
+             if (parameter == null)
+                 IsBusy = true;
              var list = Db.Dishes.Select(i => new Dish
              {
                  Id = i.Id,
@@ -182,18 +198,24 @@ namespace Xamarin.ViewModels
              Dishes.Clear();
              foreach (var dish in list)
                  Dishes.Add(dish);
-             IsBusy = false;
+             if (parameter == null)
+                 IsBusy = false;
 
         }
 
-        public async Task<HttpResponseMessage> GetDishes()
+        public async Task<HttpResponseMessage> GetDishes(bool firstStart = false)
         {
-
+            if (firstStart)
+            {
+                Dishes.Clear();
+                LoaderIsVisible = true;
+                Thread.Sleep(1000);
+            }
             var dishes = await _dishesService.GetDishes();
 
             if (dishes == null)
             {
-                LoadDishesCommand.Execute(null);
+                LoadDishesCommand.Execute(firstStart);
                 return null;
             }
             Db.Database.EnsureCreated();
@@ -208,9 +230,10 @@ namespace Xamarin.ViewModels
             }
 
             Db.SaveChanges();
-            LoadDishesCommand.Execute(null);
+            LoadDishesCommand.Execute(firstStart);
+            if(firstStart)
+                LoaderIsVisible = false;
             return new HttpResponseMessage(new HttpStatusCode());
         }
-
     }
 }

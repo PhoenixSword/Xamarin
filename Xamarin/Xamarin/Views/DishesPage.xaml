@@ -5,7 +5,6 @@
              x:Class="Xamarin.Views.DishesPage"
               Title="{Binding Title}">
 
-
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Refresh" Command="{Binding RefreshCommand}" IconImageSource="RefreshIcon.png">
         </ToolbarItem>
@@ -18,13 +17,15 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ScrollView>
+
         <Grid BackgroundColor="{DynamicResource Background}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="{Binding ConnectionLabelHeight}"></RowDefinition>
         </Grid.RowDefinitions>
+
             <StackLayout Grid.Row="0" HeightRequest="300">
-                <AbsoluteLayout x:Name="Loading" HorizontalOptions="Center" Margin="0, 250, 0, 0">
+                <AbsoluteLayout HorizontalOptions="Center" Margin="0, 250, 0, 0" IsVisible="{Binding LoaderIsVisible}">
                     <ActivityIndicator IsRunning="True"/>
                 </AbsoluteLayout>
                 <ListView

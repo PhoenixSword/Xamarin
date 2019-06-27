@@ -33,6 +33,7 @@ namespace Xamarin.Droid
                 if (eventArgs.Account == null)
                 {
                     new AlertDialog.Builder(Context).SetTitle("Authentication canceled").SetMessage("You didn't completed the authentication process").Show();
+                    App.Current.MainPage = new LoginPage();
                     return;
                 }
                 var userId = "";

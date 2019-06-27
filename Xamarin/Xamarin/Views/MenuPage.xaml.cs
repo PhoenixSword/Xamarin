@@ -9,7 +9,7 @@ namespace Xamarin.Views
         {
             InitializeComponent();
             BindingContext = new MenuPageViewModel(this);
-            listView.ItemTemplate = new DataTemplate(typeof(CustomCell));
+            ItemsList.ItemTemplate = new DataTemplate(typeof(CustomCell));
         }
     }
 }

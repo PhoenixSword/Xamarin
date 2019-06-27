@@ -44,11 +44,13 @@ namespace Xamarin.Droid
         public void OnAuthenticationCanceled()
         {
             new AlertDialog.Builder(Context).SetTitle("Authentication canceled").SetMessage("You didn't completed the authentication process").Show();
+            App.Current.MainPage = new LoginPage();
         }
 
         public void OnAuthenticationFailed(string message, Exception exception)
         {
             new AlertDialog.Builder(Context).SetTitle(message).SetMessage(exception?.ToString()).Show();
+            App.Current.MainPage = new LoginPage();
         }
     }
 }
