@@ -3,6 +3,8 @@ using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
 using Plugin.CurrentActivity;
+using Xamarin.Forms;
+using Android.Widget;
 
 namespace Xamarin.Droid
 {
@@ -11,6 +13,7 @@ namespace Xamarin.Droid
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            var msgText = FindViewById<TextView>(Resource.Id.msgText);
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
