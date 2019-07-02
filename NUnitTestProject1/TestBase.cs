@@ -10,8 +10,8 @@ namespace NUnitTestProject1
             DbContextOptionsBuilder builder = new DbContextOptionsBuilder();
             builder.UseSqlite("DataSource=:memory:", x=> { });
             var dbContext = new ApplicationDbContext(builder.Options);
-            dbContext.Database.OpenConnection();
-            dbContext.Database.EnsureCreated();
+            //dbContext.Database.OpenConnection();
+            //dbContext.Database.EnsureCreated();
             return dbContext;
         }
     }

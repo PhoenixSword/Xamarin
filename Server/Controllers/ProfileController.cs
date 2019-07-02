@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Server.Data.Repositories.Abstract;
 using Xamarin.Models.Models;
 
@@ -10,26 +11,26 @@ namespace Server.Controllers
     [ApiController]
     public class ProfileController : Controller
     {
-        private readonly IRepo _repo;
+        private readonly IProfileRepo _profileRepo;
 
-        public ProfileController(IRepo repo)
+        public ProfileController(IProfileRepo profileRepo)
         {
-            _repo = repo;
+            _profileRepo = profileRepo;
         }
         [HttpPost]
         public void UpdateProfile(Profile profile)
         {
-            _repo.UpdateProfile(profile);
+            _profileRepo.UpdateProfile(profile);
         }
         [HttpPost]
         public Profile Login(Profile profile)
         {
-            return _repo.LoginProfile(profile);
+            return _profileRepo.LoginProfile(profile);
         }
         [HttpPost]
-        public Profile Register(Profile profile)
+        public Task<Profile> Register(Profile profile)
         {
-            return _repo.RegisterProfile(profile);
+            return _profileRepo.RegisterProfile(profile);
         }
     }
 }

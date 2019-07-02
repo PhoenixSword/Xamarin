@@ -14,38 +14,38 @@ namespace NUnitTestProject1
         }
 
 
-        [Test]
-        public void Test1()
-        {
-            var context = GetDbContext();
-            context.Dishes.Add(new Dish
-            {
-                Description = "asdasd",
-                Id = Guid.NewGuid().ToString(),
-                Name = "Name1",
-                Sum = 123
-            });
+        //[Test]
+        //public void Test1()
+        //{
+        //    var context = GetDbContext();
+        //    context.Dishes.Add(new Dish
+        //    {
+        //        Description = "asdasd",
+        //        Id = Guid.NewGuid().ToString(),
+        //        Name = "Name1",
+        //        Sum = 123
+        //    });
 
-            context.SaveChanges();
-            var data = context.Dishes.ToList();
-            Assert.AreEqual(data.Count, 1);
-        }
+        //    context.SaveChanges();
+        //    var data = context.Dishes.ToList();
+        //    Assert.AreEqual(data.Count, 1);
+        //}
 
-        [Test]
-        public void Test2()
-        {
-            var context = GetDbContext();
-            context.Ingredients.Add(new Ingredient
-            {
-                DishId = "1",
-                Id = Guid.NewGuid().ToString(),
-                Name = "Name1"
-            });
+        //[Test]
+        //public void Test2()
+        //{
+        //    var context = GetDbContext();
+        //    context.Ingredients.Add(new Ingredient
+        //    {
+        //        DishId = "1",
+        //        Id = Guid.NewGuid().ToString(),
+        //        Name = "Name1"
+        //    });
 
-            Assert.Throws<DbUpdateException>(() =>
-            {
-                context.SaveChanges();
-            });
-        }
+        //    Assert.Throws<DbUpdateException>(() =>
+        //    {
+        //        context.SaveChanges();
+        //    });
+        //}
     }
 }
