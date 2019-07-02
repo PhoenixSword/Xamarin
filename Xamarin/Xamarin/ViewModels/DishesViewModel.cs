@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -114,6 +115,7 @@ namespace Xamarin.ViewModels
             {
                 Device.BeginInvokeOnMainThread(() =>
                 {
+                    Application.Current.Properties["connection"] = e;
                     LabelColor = e ? Color.Green : Color.Gray;
                     ConnectionLabel = e ? "Back online" : "No connection";
 
@@ -141,6 +143,7 @@ namespace Xamarin.ViewModels
 
             Device.StartTimer(TimeSpan.FromSeconds(5), () =>
             {
+
                 CrossConnectivity.Current.IsRemoteReachable("192.168.0.141", 8080).ContinueWith(task =>
                 {
                     MessagingCenter.Send<object, bool>(this, MessageKeys.Connection, task.Result);
@@ -165,8 +168,6 @@ namespace Xamarin.ViewModels
             }
         }
 
-
-
         private async Task AddItemAsync()
         {
             await _page.Navigation.PushAsync(new NewDishPage());
@@ -184,7 +185,7 @@ namespace Xamarin.ViewModels
 
              if (parameter == null)
                  IsBusy = true;
-             var list = Db.Dishes.Select(i => new Dish
+             var list = Db.Dishes.Where(d=>d.ProfileId == Application.Current.Properties["id"].ToString()).Select(i => new Dish
              {
                  Id = i.Id,
                  Name = i.Name,
@@ -211,17 +212,23 @@ namespace Xamarin.ViewModels
                 LoaderIsVisible = true;
                 Thread.Sleep(1000);
             }
-            var dishes = await _dishesService.GetDishes();
+            IEnumerable<Dish> dishes = null;
+
+            if ((bool) Application.Current.Properties["connection"])
+                dishes = await _dishesService.GetDishes();
+
 
             if (dishes == null)
             {
                 LoadDishesCommand.Execute(firstStart);
+                if (firstStart)
+                    LoaderIsVisible = false;
                 return null;
             }
             Db.Database.EnsureCreated();
             var enumerable = dishes as Dish[] ?? dishes.ToArray();
             var list1 = enumerable.ToList();
-            var list2 = Db.Dishes.ToList();
+            var list2 = Db.Dishes.Where(d => d.ProfileId == Application.Current.Properties["id"].ToString()).ToList();
             var listId = list1.Select(d => d.Id).Except(list2.Select(d => d.Id)).ToList();
             foreach (var id in listId)
             {
@@ -231,7 +238,7 @@ namespace Xamarin.ViewModels
 
             Db.SaveChanges();
             LoadDishesCommand.Execute(firstStart);
-            if(firstStart)
+            if (firstStart)
                 LoaderIsVisible = false;
             return new HttpResponseMessage(new HttpStatusCode());
         }

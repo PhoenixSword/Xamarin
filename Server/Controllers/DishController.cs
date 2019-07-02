@@ -16,9 +16,9 @@ namespace Server.Controllers
             _repo = repo;
         }
         [HttpPost]
-        public IEnumerable<Dish> GetDishes()
+        public IEnumerable<Dish> GetDishes(string id)
         {
-            return _repo.GetDishes();
+            return _repo.GetDishes(id);
         }
         [HttpPost]
         public void UpdateDishes(Dish dish)

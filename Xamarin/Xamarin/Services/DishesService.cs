@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using Xamarin.Forms;
 using Xamarin.Models.Models;
 
 namespace Xamarin.Services
@@ -19,8 +20,8 @@ namespace Xamarin.Services
         {
             try
             {
-                _client.Timeout = TimeSpan.FromMilliseconds(4000);
-                var httpResponseMessage = _client.PostAsync(path + "dish/getdishes", null).Result;
+                _client.Timeout = TimeSpan.FromMilliseconds(1000);
+                var httpResponseMessage = _client.PostAsync(path + "dish/getdishes?id=" + Application.Current.Properties["id"], null).Result;
                 var resp = await httpResponseMessage.Content.ReadAsStringAsync();
                 return httpResponseMessage.StatusCode == System.Net.HttpStatusCode.OK ? JsonConvert.DeserializeObject<List<Dish>>(resp) : null;
             }

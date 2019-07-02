@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "340945119693",
+    "firebase_url": "https://dishes-243709.firebaseio.com",
+    "project_id": "dishes-243709",
+    "storage_bucket": "dishes-243709.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:340945119693:android:ea946a752af03687",
+        "android_client_info": {
+          "package_name": "com.xamarin.dishes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "340945119693-mmofr5k57uf3pd7f3m1hjtpgfouj6pn7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.xamarin.dishes",
+            "certificate_hash": "3702a61a539c01f4df4a664843110a97abf345af"
+          }
+        },
+        {
+          "client_id": "340945119693-fpm14d7osfqrgqf3tlh65ri992bla9fj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDN9qd-hsxl0tZkeuiqgbMiAVdmKphnBLc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "340945119693-fpm14d7osfqrgqf3tlh65ri992bla9fj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

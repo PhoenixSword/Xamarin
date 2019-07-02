@@ -9,6 +9,8 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.4" />
+    <PackageReference Include="PushSharp" Version="4.0.10" />
+    <PackageReference Include="PushSharp.Core" Version="1.0.1" />
   </ItemGroup>
 
   <ItemGroup>

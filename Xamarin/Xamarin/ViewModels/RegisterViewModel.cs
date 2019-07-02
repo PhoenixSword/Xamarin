@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Models.Models;
@@ -11,7 +10,7 @@ namespace Xamarin.ViewModels
     public class RegisterViewModel : BaseViewModel
     {
         private readonly DishesService _dishesService = new DishesService();
-        public ICommand RegisterCommand => new Command(async () => await RegisterAsync());
+        public ICommand RegisterCommand => new Command(Register);
         public ICommand LoginPageCommand => new Command(LoginPage);
 
         private string _email;
@@ -51,7 +50,7 @@ namespace Xamarin.ViewModels
             }
         }
 
-        private async Task RegisterAsync()
+        private void Register()
         {
             var name = Email;
             var password = Password;

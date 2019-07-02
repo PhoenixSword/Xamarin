@@ -36,6 +36,7 @@ namespace Xamarin
             if (!Current.Properties.TryGetValue("id", out _)) Current.Properties["id"] = null;
             if (!Current.Properties.TryGetValue("name", out _)) Current.Properties["name"] = null;
             if (!Current.Properties.TryGetValue("image", out _)) Current.Properties["image"] = null;
+            Current.Properties["connection"] = false;
 
             if (Current.Properties["id"] != null)
             {
@@ -76,7 +77,7 @@ namespace Xamarin
         }
         protected override void OnStart()
         {
-            AppCenter.Start("android=12f20db8-63a7-4ffb-93f4-f270dd16c130;",  typeof(Analytics), typeof(Crashes));
+            AppCenter.Start("android=12f20db8-63a7-4ffb-93f4-f270dd16c130;", typeof(Analytics), typeof(Crashes));
         }
 
         protected override void OnSleep()

@@ -196,7 +196,8 @@ namespace Xamarin.ViewModels
                 Name = Name,
                 Image = Image,
                 ImageSource = ImageSource,
-                Sum = sum
+                Sum = sum,
+                ProfileId = Application.Current.Properties["id"].ToString()
             };
             if (string.IsNullOrEmpty(Name)) return;
             if (string.IsNullOrEmpty(Id))

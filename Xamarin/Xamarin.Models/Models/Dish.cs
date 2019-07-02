@@ -15,6 +15,8 @@ namespace Xamarin.Models.Models
         public ImageSource ImageSource { get; set; }
         public string Description { get; set; }
 
+        public string ProfileId { get; set; }
+
         [OneToMany]
         public List<Ingredient> Ingredients { get; set; }
 
