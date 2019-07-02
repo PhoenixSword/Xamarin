@@ -3,12 +3,17 @@ using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
 using Plugin.CurrentActivity;
+<<<<<<< HEAD
 using Firebase.Messaging;
 using Firebase.Iid;
 using Android.Util;
 using Android.Widget;
 using Android.Gms.Common;
 using Android.Content;
+=======
+using Xamarin.Forms;
+using Android.Widget;
+>>>>>>> 0c95c2a30c66fe61e8d5c57b09566eada2c56d23
 
 namespace Xamarin.Droid
 {
@@ -21,6 +26,7 @@ namespace Xamarin.Droid
         internal static readonly int NOTIFICATION_ID = 100;
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            var msgText = FindViewById<TextView>(Resource.Id.msgText);
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
             base.OnCreate(savedInstanceState);
