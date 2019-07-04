@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using Android.Support.V4.App;
 using Android.Util;
@@ -36,9 +37,9 @@ namespace Xamarin.Droid
             }
 
             var pendingIntent = PendingIntent.GetActivity(this, MainActivity.NOTIFICATION_ID, intent, PendingIntentFlags.OneShot);
-
             var notificationBuilder = new NotificationCompat.Builder(this, MainActivity.CHANNEL_ID)
                                       .SetSmallIcon(Resource.Drawable.PlusIcon)
+                                      .SetLargeIcon(BitmapFactory.DecodeResource(Resources, Resource.Drawable.icon))
                                       .SetContentTitle("Dishes")
                                       .SetContentText(messageBody)
                                       .SetAutoCancel(true)

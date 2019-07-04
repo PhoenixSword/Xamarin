@@ -50,7 +50,7 @@ namespace Server.Data.Repositories.Concrete
             if (_ctx.Profiles.Any(p => p.Email == profile.Email)) return null;
             profile.Name = profile.Email;
             profile.UserName = profile.Email;
-            var result = await _userManager.CreateAsync(profile, profile.Password);
+            await _userManager.CreateAsync(profile, profile.Password);
             return profile;
         }
     }
