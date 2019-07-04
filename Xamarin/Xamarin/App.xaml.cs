@@ -89,6 +89,7 @@ namespace Xamarin
         {
         }
 
+
         public static void SaveToken(string id, string name, string image)
         {
             Current.Properties["id"] = id;

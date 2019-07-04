@@ -27,7 +27,7 @@ namespace Xamarin.Droid
             SendNotification(body, message.Data);
         }
 
-        void SendNotification(string messageBody, IDictionary<string, string> data)
+        public void SendNotification(string messageBody, IDictionary<string, string> data)
         {
             var intent = new Intent(this, typeof(MainActivity));
             intent.AddFlags(ActivityFlags.ClearTop);
@@ -38,7 +38,6 @@ namespace Xamarin.Droid
 
             var pendingIntent = PendingIntent.GetActivity(this, MainActivity.NOTIFICATION_ID, intent, PendingIntentFlags.OneShot);
             var notificationBuilder = new NotificationCompat.Builder(this, MainActivity.CHANNEL_ID)
-                                      .SetSmallIcon(Resource.Drawable.PlusIcon)
                                       .SetLargeIcon(BitmapFactory.DecodeResource(Resources, Resource.Drawable.icon))
                                       .SetContentTitle("Dishes")
                                       .SetContentText(messageBody)
