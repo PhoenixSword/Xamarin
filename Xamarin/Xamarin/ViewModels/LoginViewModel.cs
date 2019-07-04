@@ -9,7 +9,7 @@ namespace Xamarin.ViewModels
 {
     public class LoginViewModel : BaseViewModel
     {
-        private readonly DishesService _dishesService = new DishesService();
+        private readonly ProfileService _profileService = new ProfileService();
         private string _email;
         public string Email
         {
@@ -80,7 +80,7 @@ namespace Xamarin.ViewModels
                 DependencyService.Get<IMessage>().LongAlert("Enter login and password");
                 return;
             }
-            var login = _dishesService.Login(name, password);
+            var login = _profileService.Login(name, password);
 
             if (login != null)
             {

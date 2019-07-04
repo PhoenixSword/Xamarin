@@ -19,7 +19,7 @@ namespace Xamarin.ViewModels
     }
     public class SettingsViewModel : BaseViewModel
     {
-        readonly DishesService _dishesService = new DishesService();
+        readonly ProfileService _profileService = new ProfileService();
         private string _id;
         private string Id
         {
@@ -197,7 +197,7 @@ namespace Xamarin.ViewModels
             };
             MessagingCenter.Send<object, Profile>(this, MessageKeys.Settings, profile);
 
-            _dishesService.UpdateProfile(profile);
+            _profileService.UpdateProfile(profile);
         }
     }
 }

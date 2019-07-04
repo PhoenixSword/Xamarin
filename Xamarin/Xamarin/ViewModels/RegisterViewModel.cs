@@ -9,7 +9,7 @@ namespace Xamarin.ViewModels
 {
     public class RegisterViewModel : BaseViewModel
     {
-        private readonly DishesService _dishesService = new DishesService();
+        private readonly ProfileService _profileService = new ProfileService();
         public ICommand RegisterCommand => new Command(Register);
         public ICommand LoginPageCommand => new Command(LoginPage);
 
@@ -68,7 +68,7 @@ namespace Xamarin.ViewModels
                 return;
             }
 
-            var register = _dishesService.Register(name, password);
+            var register = _profileService.Register(name, password);
             if (register != null)
             {
                 Application.Current.Properties["id"] = register.Id;
