@@ -61,8 +61,7 @@ namespace Server.Data.Repositories.Concrete
             _ctx.SaveChanges();
 
             if (oldDish != null) return;
-            JObject obj;
-            obj = JObject.Parse("{ \"to\": \"/topics/notification\",\"notification\" : { \"body\" : \"New dish: " + dish.Name + "\"} }");
+            var obj = JObject.Parse("{ \"to\": \"/topics/notification\",\"notification\" : { \"body\" : \"New dish: " + dish.Name + "\"} }");
 
             var json = JsonConvert.SerializeObject(obj);
             var content = new StringContent(json, Encoding.UTF8, "application/json");

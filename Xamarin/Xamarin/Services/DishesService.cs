@@ -20,22 +20,13 @@ namespace Xamarin.Services
         public DishesService()
         {
             _client.BaseAddress = new Uri(path);
-            _client.DefaultRequestHeaders
-                    .Accept
-                    .Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
         public async Task<IEnumerable<Dish>> GetDishes()
         {
             try
             {
                 _client.Timeout = TimeSpan.FromMilliseconds(1000);
-                var request = new HttpRequestMessage(HttpMethod.Post, "dish/getdishes")
-                {
-                    Content = new StringContent("{\"id\":\"" + Application.Current.Properties["id"] + "\"}",
-                        Encoding.UTF8,
-                        "application/json")
-                };
-                var httpResponseMessage = _client.SendAsync(request).Result;
+                var httpResponseMessage = _client.PostAsync(path + "dish/GetDishes?id=" + Application.Current.Properties["id"], null).Result;
                 var resp = await httpResponseMessage.Content.ReadAsStringAsync();
                 return httpResponseMessage.StatusCode == System.Net.HttpStatusCode.OK ? JsonConvert.DeserializeObject<List<Dish>>(resp) : null;
             }
@@ -50,13 +41,7 @@ namespace Xamarin.Services
             try
             {
                 _client.Timeout = TimeSpan.FromMilliseconds(3000);
-                var request = new HttpRequestMessage(HttpMethod.Delete, "dish/deletedishes")
-                {
-                    Content = new StringContent("{\"id\":\"" + Application.Current.Properties["id"] + "\"}",
-                        Encoding.UTF8,
-                        "application/json")
-                };
-                await _client.SendAsync(request);
+                await _client.DeleteAsync(path + "dish/DeleteDishes?id=" + id);
             }
             catch (Exception)
             {

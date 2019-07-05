@@ -39,6 +39,7 @@ namespace Xamarin.Droid
             var pendingIntent = PendingIntent.GetActivity(this, MainActivity.NOTIFICATION_ID, intent, PendingIntentFlags.OneShot);
             var notificationBuilder = new NotificationCompat.Builder(this, MainActivity.CHANNEL_ID)
                                       .SetLargeIcon(BitmapFactory.DecodeResource(Resources, Resource.Drawable.icon))
+                                      .SetSmallIcon(Resource.Drawable.PlusIcon)
                                       .SetContentTitle("Dishes")
                                       .SetContentText(messageBody)
                                       .SetAutoCancel(true)
