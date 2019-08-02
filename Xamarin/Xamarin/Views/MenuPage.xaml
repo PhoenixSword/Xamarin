@@ -10,7 +10,7 @@
         <Label Text="{Binding ProfileName}" HorizontalTextAlignment="Center" FontSize="20" />
 
         <ListView x:Name="ItemsList" ItemsSource="{Binding MenuItems}" SelectedItem="{Binding ItemSelected, Mode=TwoWay}" HasUnevenRows="True" HorizontalOptions="Center">
-            <ListView.ItemTemplate HorizontalOptions="Center" FontSize="30"> 
+            <ListView.ItemTemplate> 
                 <DataTemplate>
                     <ViewCell>
                         <Label Text="{Binding Title}"/>

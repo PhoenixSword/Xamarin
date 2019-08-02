@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -66,10 +65,7 @@ namespace Xamarin.Services
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 var httpResponseMessage = _client.PostAsync(path + "profile/register", content).Result;
                 var resp = httpResponseMessage.Content.ReadAsStringAsync().Result;
-                if (httpResponseMessage.StatusCode == System.Net.HttpStatusCode.OK)
-                    return JsonConvert.DeserializeObject<Profile>(resp);
-                else
-                    return null;
+                return httpResponseMessage.StatusCode == System.Net.HttpStatusCode.OK ? JsonConvert.DeserializeObject<Profile>(resp) : null;
             }
             catch (Exception)
             {
